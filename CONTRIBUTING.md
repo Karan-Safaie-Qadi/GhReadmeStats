@@ -1,3 +1,5 @@
-# Contributing
+## Getting Started
 
-Thank you for considering contributing to GhReadmeStats!
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
