@@ -5,6 +5,9 @@ on:
     branches: [master]
   workflow_dispatch:
 
+env:
+  CLOUDFLARE_ACCOUNT_ID: 925e2558d73fa3417c800237a488fcd5
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -27,5 +30,3 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           command: pages deploy . --project-name gh-readme-stats --branch master
-        env:
-          CLOUDFLARE_ACCOUNT_ID: 925e2558d73fa3417c800237a488fcd5
