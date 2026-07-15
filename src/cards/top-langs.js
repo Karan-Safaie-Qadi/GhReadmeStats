@@ -48,6 +48,7 @@ function getStyles(theme) {
     }`;
 }
 
+// renderTopLangsCard - top-langs helper function
 export function renderTopLangsCard(langData, theme, options = {}) {
   const { hide_title = false } = options;
   const { langs } = langData;

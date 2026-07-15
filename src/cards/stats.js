@@ -167,6 +167,7 @@ function getIconSvg(key) {
   }
 }
 
+// renderStatsCard - stats helper function
 export function renderStatsCard(stats, theme, options = {}) {
   const {
     hide_rank = false,

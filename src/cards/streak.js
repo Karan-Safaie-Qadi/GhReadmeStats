@@ -2,6 +2,7 @@ const CARD_WIDTH = 495;
 const CARD_HEIGHT = 195;
 const COL_WIDTH = 165;
 
+// getStyles - streak helper function
 function getStyles(theme) {
   return `
     @keyframes currstreak {
