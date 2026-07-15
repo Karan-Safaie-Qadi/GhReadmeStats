@@ -4,3 +4,4 @@
 // .github/ISSUE_TEMPLATE/feature_request.md - update 3 (7e7f65cb)
 // .github/ISSUE_TEMPLATE/feature_request.md - update 4 (c83e4542)
 // .github/ISSUE_TEMPLATE/feature_request.md - update 5 (58ca04b6)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 6 (8d9cd324)
