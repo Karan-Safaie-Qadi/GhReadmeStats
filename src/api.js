@@ -8,6 +8,7 @@ const USER_QUERY = `
       avatarUrl(size: 200)
       bio
       company
+// TODO: error handling for rate limiting
       location
       contributionsCollection {
         totalCommitContributions
