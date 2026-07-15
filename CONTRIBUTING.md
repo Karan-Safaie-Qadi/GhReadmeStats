@@ -1,3 +1,3 @@
-## Code Review
+## Community
 
-All submissions require review. Maintainers may request changes before merging.
+Be respectful and constructive. We welcome contributions from everyone.
