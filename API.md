@@ -6,3 +6,4 @@
 // API.md - update 5 (eed8262e)
 // API.md - update 6 (e24f340f)
 // API.md - update 7 (19c8aff5)
+// API.md - update 8 (8877f6d2)
