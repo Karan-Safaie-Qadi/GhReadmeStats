@@ -94,7 +94,6 @@ function calculateRank(stats) {
   return 'D';
 }
 
-// getRankCircle - stats helper function
 function getRankCircle(rank) {
   return `
     <g data-testid="rank-circle" transform="translate(365, 47.5)">
@@ -116,6 +115,7 @@ const LABEL_MAP = {
   contribs: 'Contributed to (last year):',
 };
 
+// getStatItems - stats helper function
 function getStatItems(stats, hide, showIcons, includeAllCommits) {
   const hideSet = new Set(hide);
   const rows = [];
