@@ -21,6 +21,15 @@ const USER_QUERY = `
           forkCount
           primaryLanguage { name }
           isPrivate
+          defaultBranchRef {
+            target {
+              ... on Commit {
+                history(first: 0) {
+                  totalCount
+                }
+              }
+            }
+          }
         }
       }
       pullRequests(first: 1) { totalCount }
@@ -78,7 +87,8 @@ async function githubRequest(query, variables, token) {
   return json.data;
 }
 
-export async function fetchUserStats(username, token) {
+export async function fetchUserStats(username, token, options = {}) {
+  const { include_all_commits = false, count_private = false } = options;
   const data = await githubRequest(USER_QUERY, { login: username }, token);
   const user = data.user;
   if (!user) throw new Error(`User "${username}" not found`);
@@ -86,6 +96,21 @@ export async function fetchUserStats(username, token) {
   const repos = user.repositories.nodes || [];
   const totalStars = repos.reduce((sum, r) => sum + r.stargazerCount, 0);
   const totalForks = repos.reduce((sum, r) => sum + r.forkCount, 0);
+
+  const yearCommits = user.contributionsCollection.totalCommitContributions + user.contributionsCollection.restrictedContributionsCount;
+
+  let allTimeCommits = yearCommits;
+  if (include_all_commits) {
+    const repoCommits = repos.reduce((sum, r) => {
+      const count = r.defaultBranchRef?.target?.history?.totalCount || 0;
+      return sum + count;
+    }, 0);
+    allTimeCommits = Math.max(yearCommits, repoCommits);
+  }
+
+  const totalRepos = count_private
+    ? user.repositories.totalCount
+    : repos.filter(r => !r.isPrivate).length;
 
   return {
     name: user.name || user.login,
@@ -96,10 +121,10 @@ export async function fetchUserStats(username, token) {
     location: user.location,
     totalStars,
     totalForks,
-    totalCommits: user.contributionsCollection.totalCommitContributions + user.contributionsCollection.restrictedContributionsCount,
+    totalCommits: allTimeCommits,
     totalPRs: user.pullRequests.totalCount,
     totalIssues: user.issues.totalCount,
-    totalRepos: user.repositories.totalCount,
+    totalRepos,
     contributedTo: user.repositoriesContributedTo.totalCount,
     followers: user.followers.totalCount,
     following: user.following.totalCount,

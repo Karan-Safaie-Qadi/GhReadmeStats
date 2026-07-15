@@ -22,7 +22,10 @@ export async function onRequest(context) {
 
   try {
     const theme = applyCustomColors(getTheme(themeName), Object.fromEntries(params));
-    const stats = await fetchUserStats(username, token);
+    const stats = await fetchUserStats(username, token, {
+      include_all_commits: parseBoolean(params.get('include_all_commits')),
+      count_private: parseBoolean(params.get('count_private')),
+    });
     const options = {
       hide_rank: parseBoolean(params.get('hide_rank')),
       show_icons: parseBoolean(params.get('show_icons')),
