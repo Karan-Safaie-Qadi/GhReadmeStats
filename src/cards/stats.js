@@ -114,7 +114,7 @@ const LABEL_MAP = {
   contribs: 'Contributed to (last year):',
 };
 
-function getStatItems(stats, hide, showIcons, theme) {
+function getStatItems(stats, hide, showIcons) {
   const hideSet = new Set(hide);
   const rows = [];
 
@@ -131,7 +131,7 @@ function getStatItems(stats, hide, showIcons, theme) {
     const labelOffset = showIcons ? `x="25"` : '';
 
     const iconSvg = showIcons
-      ? `<svg data-testid="icon" class="icon" viewBox="0 0 16 16" width="16" height="16">${getIconSvg(row.key, theme.icon_color)}</svg>`
+      ? `<svg data-testid="icon" class="icon" viewBox="0 0 16 16" width="16" height="16">${getIconSvg(row.key)}</svg>`
       : '';
 
     return `<g transform="translate(0, ${y})">
@@ -219,7 +219,7 @@ export function renderStatsCard(stats, theme, options = {}) {
   >
     ${hide_rank ? '' : getRankCircle(rank)}
     <svg x="0" y="0">
-      ${getStatItems(stats, hide, show_icons, theme)}
+      ${getStatItems(stats, hide, show_icons)}
     </svg>
   </g>
 </svg>`;
