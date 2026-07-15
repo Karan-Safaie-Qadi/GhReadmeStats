@@ -1,3 +1,3 @@
-## Scope
+## Enforcement
 
-This Code of Conduct applies within all project spaces and public spaces.
+Instances of unacceptable behavior may be reported to the project maintainers.
