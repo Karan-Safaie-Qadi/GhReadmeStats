@@ -8,6 +8,7 @@ const USER_QUERY = `
       avatarUrl(size: 200)
       bio
       company
+// TODO: proper error propagation in API handlers
 // TODO: Handle network timeout errors
 // TODO: input validation error messages
 // TODO: error logging with context
