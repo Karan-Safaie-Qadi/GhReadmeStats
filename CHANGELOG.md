@@ -1,5 +1,4 @@
-### Features
-- 50+ built-in color themes
-- Custom color overrides via query parameters
-- Static SVG export for GitHub Pages
-- Dynamic API generation via Cloudflare Workers
+### API Endpoints
+- `/api/stats` - GitHub statistics card
+- `/api/top-langs` - Language breakdown card
+- `/api/streak` - Contribution streak card
