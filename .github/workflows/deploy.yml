@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Workers
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -22,8 +22,8 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          command: deploy src/index.js --name gh-readme-stats
+          command: pages deploy . --project-name gh-readme-stats --branch main

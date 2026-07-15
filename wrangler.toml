@@ -1,7 +1,6 @@
 name = "gh-readme-stats"
 compatibility_date = "2026-07-01"
-main = "src/index.js"
+pages_build_output_dir = "public"
 
-[vars]
-THEME_DEFAULT = "dark"
-CACHE_TTL = "300"
+[env.production]
+vars = { THEME_DEFAULT = "dark", CACHE_TTL = "300" }

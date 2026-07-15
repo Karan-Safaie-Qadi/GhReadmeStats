@@ -23,36 +23,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - uses: actions/github-script@v7
-        id: fetch-stats
-        with:
-          script: |
-            const { fetchUserStats, fetchTopLanguages } = await import('${{ github.workspace }}/src/api.js');
-            const { renderStatsCard } = await import('${{ github.workspace }}/src/cards/stats.js');
-            const { renderTopLangsCard } = await import('${{ github.workspace }}/src/cards/top-langs.js');
-            const { getTheme } = await import('${{ github.workspace }}/src/themes.js');
-
-            const username = process.env.USERNAME;
-            const token = process.env.GITHUB_TOKEN;
-
-            const stats = await fetchUserStats(username, token);
-            const theme = getTheme('dark');
-            const svgStats = renderStatsCard(stats, theme);
-            const svgStatsLight = renderStatsCard(stats, getTheme('light'));
-
-            const langData = await fetchTopLanguages(username, token);
-            const svgLangs = renderTopLangsCard(langData, theme);
-            const svgLangsLight = renderTopLangsCard(langData, getTheme('light'));
-
-            const fs = require('fs');
-            const dir = '${{ github.workspace }}/svgs';
-            if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-            fs.writeFileSync(dir + '/stats-dark.svg', svgStats);
-            fs.writeFileSync(dir + '/stats-light.svg', svgStatsLight);
-            fs.writeFileSync(dir + '/top-langs-dark.svg', svgLangs);
-            fs.writeFileSync(dir + '/top-langs-light.svg', svgLangsLight);
-
-            return 'SVGs generated';
+      - name: Generate SVGs
+        run: node scripts/generate-svgs.mjs ./svgs
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
