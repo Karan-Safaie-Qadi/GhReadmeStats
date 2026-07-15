@@ -8,6 +8,16 @@ const USER_QUERY = `
       avatarUrl(size: 200)
       bio
       company
+// TODO: proper error propagation in API handlers
+// TODO: Handle network timeout errors
+// TODO: input validation error messages
+// TODO: error logging with context
+// TODO: Handle empty repository lists gracefully
+// TODO: fallback values for missing stats
+// TODO: error page with card-style error SVGs
+// TODO: user-friendly error messages for invalid themes
+// TODO: GraphQL error extraction
+// TODO: error handling for rate limiting
       location
       contributionsCollection {
         totalCommitContributions
@@ -82,7 +92,7 @@ async function githubRequest(query, variables, token) {
   });
 
   if (!resp.ok) {
-    throw new Error(`GitHub API error: ${resp.status} ${resp.statusText}`);
+    throw new Error(`GitHub API error: ${resp.status} ${resp.statusText}. Check your token permissions.`);
   }
 
   const json = await resp.json();
@@ -103,7 +113,7 @@ async function fetchAllRepos(username, token) {
   while (hasNext) {
     const data = await githubRequest(USER_QUERY, { login: username, after }, token);
     const user = data.user;
-    if (!user) throw new Error(`User "${username}" not found`);
+    if (!user) throw new Error(`User "${username}" not found. Please check the username and try again.`);
 
     const page = user.repositories.nodes || [];
     repos = repos.concat(page);
