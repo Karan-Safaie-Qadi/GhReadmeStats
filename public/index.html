@@ -3,30 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GhReadmeStats</title>
+  <title>GhReadmeStats — GitHub Readme Stats API</title>
   <style>
-    body { font-family: -apple-system, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 20px; background: #0d1117; color: #c9d1d9; }
-    a { color: #58a6ff; }
-    code { background: #1c2128; padding: 2px 6px; border-radius: 4px; }
-    h1 { color: #e6edf3; }
+    :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #8b949e; --title: #e6edf3; --accent: #58a6ff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    h1, h2, h3 { color: var(--title); }
+    h1 { font-size: 2em; margin-bottom: 8px; }
+    h2 { font-size: 1.4em; margin: 32px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { background: var(--card); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+    pre { background: var(--card); padding: 12px 16px; border-radius: 6px; overflow-x: auto; border: 1px solid var(--border); margin: 8px 0; }
+    pre code { background: none; padding: 0; }
+    .badge { display: inline-block; margin: 4px 2px; }
+    .endpoint { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin: 12px 0; }
+    .endpoint .url { font-family: monospace; color: var(--accent); font-size: 1.1em; }
+    .endpoint .desc { margin-top: 4px; }
+    .demo-img { border: 1px solid var(--border); border-radius: 6px; max-width: 100%; margin: 8px 0; }
+    .lang-select { text-align: center; margin: 20px 0; }
+    .lang-select a { display: inline-block; margin: 0 12px; padding: 6px 16px; border: 1px solid var(--border); border-radius: 20px; font-weight: 600; }
+    .lang-select a:hover { background: var(--card); text-decoration: none; }
   </style>
 </head>
 <body>
-  <h1>GhReadmeStats</h1>
-  <p>Personalized GitHub Readme Stats API</p>
-  <h2>Usage</h2>
-  <pre><code>![Stats](https://gh-readme-stats.pages.dev/api/stats?username=yourname&theme=dark)</code></pre>
-  <pre><code>![Top Languages](https://gh-readme-stats.pages.dev/api/top-langs?username=yourname&theme=dark)</code></pre>
-  <h2>Parameters</h2>
-  <ul>
-    <li><code>username</code> - GitHub username (required)</li>
-    <li><code>theme</code> - dark, light, radical, merko, tokyonight, synthwave, dracula, nord</li>
-    <li><code>hide</code> - comma-separated list: stars,commits,prs,issues,repos,contribs</li>
-    <li><code>hide_rank</code> - true/false</li>
-    <li><code>show_icons</code> - true/false</li>
-    <li><code>include_all_commits</code> - true/false</li>
-    <li><code>bg_c</code>, <code>title_c</code>, <code>text_c</code>, <code>icon_c</code>, etc. - custom colors</li>
-  </ul>
-  <p><a href="https://github.com/Karan-Safaie-Qadi/GhReadmeStats">GitHub</a></p>
+  <div class="container">
+    <h1>📊 GhReadmeStats</h1>
+    <p>Personalized GitHub Readme Stats API — self-hosted, customizable, accessible from Iran</p>
+
+    <div class="lang-select">
+      <a href="#en">🇬🇧 English</a>
+      <a href="#fa">🇮🇷 فارسی</a>
+    </div>
+
+    <h2 id="en">🇬🇧 API Endpoints</h2>
+
+    <div class="endpoint">
+      <div class="url">GET /api/stats?username=USER&amp;theme=dark</div>
+      <div class="desc">GitHub stats card with rank visualization</div>
+    </div>
+    <div class="endpoint">
+      <div class="url">GET /api/top-langs?username=USER&amp;theme=dark</div>
+      <div class="desc">Most used languages card with progress bars</div>
+    </div>
+
+    <h3>Try it</h3>
+    <p>
+      <a href="/api/stats?username=Karan-Safaie-Qadi&amp;theme=dark" target="_blank">
+        <img class="demo-img" src="/api/stats?username=Karan-Safaie-Qadi&theme=dark" alt="Stats Card">
+      </a>
+    </p>
+    <p>
+      <a href="/api/top-langs?username=Karan-Safaie-Qadi&amp;theme=dark" target="_blank">
+        <img class="demo-img" src="/api/top-langs?username=Karan-Safaie-Qadi&theme=dark" alt="Top Langs Card">
+      </a>
+    </p>
+
+    <h2>Parameters</h2>
+    <pre><code>username   — GitHub username (required)
+theme      — default, dark, radical, merko, tokyonight, dracula, nord, and 50+ more
+hide       — comma-separated: stars,commits,prs,issues,repos,contribs
+hide_rank  — true | false
+hide_border — true | false
+show_icons — true | false
+title_color, text_color, icon_color, bg_color, border_color, ring_color — hex (no #)</code></pre>
+
+    <h2 id="fa">🇮🇷 فارسی</h2>
+    <p><strong>GhReadmeStats</strong> — سرویس کارت‌های آماری گیت‌هاب</p>
+    <p>می‌توانید از این API برای نمایش آمار گیت‌هاب خود در README پروفایل استفاده کنید.</p>
+
+    <h3>نمونه</h3>
+    <pre><code>![Stats](https://gh-readme-stats.pages.dev/api/stats?username=yourname&theme=dark)</code></pre>
+
+    <p><a href="https://github.com/Karan-Safaie-Qadi/GhReadmeStats">GitHub →</a></p>
+  </div>
 </body>
 </html>
