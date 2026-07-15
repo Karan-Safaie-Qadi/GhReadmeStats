@@ -1,6 +1,7 @@
-import { fetchUserStats, fetchTopLanguages } from '../src/api.js';
+import { fetchUserStats, fetchTopLanguages, fetchStreakStats } from '../src/api.js';
 import { renderStatsCard } from '../src/cards/stats.js';
 import { renderTopLangsCard } from '../src/cards/top-langs.js';
+import { renderStreakCard } from '../src/cards/streak.js';
 import { renderWakaTimeCard } from '../src/cards/wakatime.js';
 import { getTheme } from '../src/themes.js';
 import fs from 'fs';
@@ -40,15 +41,20 @@ async function generate() {
     count_private: true,
   });
   const langData = await fetchTopLanguages(username, token);
+  const streakData = await fetchStreakStats(username, token);
 
   for (const { name, theme } of themeList) {
-    const statsSvg = renderStatsCard(stats, theme);
+    const statsSvg = renderStatsCard(stats, theme, { include_all_commits: true });
     fs.writeFileSync(path.join(outDir, `stats-${name}.svg`), statsSvg);
     console.log(`  ✓ stats-${name}.svg`);
 
     const langsSvg = renderTopLangsCard(langData, theme);
     fs.writeFileSync(path.join(outDir, `top-langs-${name}.svg`), langsSvg);
     console.log(`  ✓ top-langs-${name}.svg`);
+
+    const streakSvg = renderStreakCard(streakData, theme);
+    fs.writeFileSync(path.join(outDir, `streak-${name}.svg`), streakSvg);
+    console.log(`  ✓ streak-${name}.svg`);
   }
 
   fs.writeFileSync(path.join(outDir, 'index.html'), `<!DOCTYPE html>
@@ -74,12 +80,16 @@ async function generate() {
 
 <div class="lang-select">
   <a href="#stats">Stats Cards</a>
+  <a href="#streak">Streak Cards</a>
   <a href="#langs">Top Languages</a>
   <a href="#usage">Usage</a>
 </div>
 
 <h2 id="stats">Stats Cards</h2>
 ${themeList.map(t => `<img src="stats-${t.name}.svg" alt="Stats - ${t.name}">`).join('\n')}
+
+<h2 id="streak">Streak Cards</h2>
+${themeList.map(t => `<img src="streak-${t.name}.svg" alt="Streak - ${t.name}">`).join('\n')}
 
 <h2 id="langs">Top Languages</h2>
 ${themeList.map(t => `<img src="top-langs-${t.name}.svg" alt="Top Langs - ${t.name}">`).join('\n')}
@@ -88,15 +98,20 @@ ${themeList.map(t => `<img src="top-langs-${t.name}.svg" alt="Top Langs - ${t.na
 <p>Add to your GitHub profile README:</p>
 <pre><code>![${username}'s GitHub Stats](https://${repoOwner}.github.io/${repoName}/svgs/stats-dark.svg)</code></pre>
 <pre><code>![${username}'s Top Languages](https://${repoOwner}.github.io/${repoName}/svgs/top-langs-dark.svg)</code></pre>
+<pre><code>![${username}'s Streak Stats](https://${repoOwner}.github.io/${repoName}/svgs/streak-dark.svg)</code></pre>
 
 <h3>Other Themes</h3>
 <pre><code>![Stats - Radical](https://${repoOwner}.github.io/${repoName}/svgs/stats-radical.svg)
 ![Stats - Tokyo Night](https://${repoOwner}.github.io/${repoName}/svgs/stats-tokyonight.svg)
 ![Stats - Dracula](https://${repoOwner}.github.io/${repoName}/svgs/stats-dracula.svg)
-![Stats - Nord](https://${repoOwner}.github.io/${repoName}/svgs/stats-nord.svg)</code></pre>
+![Stats - Nord](https://${repoOwner}.github.io/${repoName}/svgs/stats-nord.svg)
+
+![Streak - Dark](https://${repoOwner}.github.io/${repoName}/svgs/streak-dark.svg)
+![Streak - Radical](https://${repoOwner}.github.io/${repoName}/svgs/streak-radical.svg)
+![Streak - Tokyo Night](https://${repoOwner}.github.io/${repoName}/svgs/streak-tokyonight.svg)</code></pre>
 </body></html>`);
 
-  console.log(`\nDone! Generated ${themeList.length * 2 + 1} files in ${outDir}`);
+  console.log(`\nDone! Generated ${themeList.length * 3 + 1} files in ${outDir}`);
 }
 
 generate().catch(err => {
