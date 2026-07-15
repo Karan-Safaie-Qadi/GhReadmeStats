@@ -1,6 +1,3 @@
-## Security Update Process
+## Recognition
 
-1. Issue is reported
-2. We investigate and confirm
-3. Fix is developed and tested
-4. Update is released
+We acknowledge security researchers who help improve our project.
