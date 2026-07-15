@@ -1,5 +1,3 @@
-## Our Standards
+## Enforcement Responsibilities
 
-- Using welcoming and inclusive language
-- Being respectful of differing viewpoints
-- Gracefully accepting constructive criticism
+Project maintainers are responsible for clarifying and enforcing standards.
