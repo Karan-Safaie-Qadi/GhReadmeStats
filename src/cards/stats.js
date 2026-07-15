@@ -148,7 +148,6 @@ function getStatItems(stats, hide, showIcons, includeAllCommits) {
   }).join('\n');
 }
 
-// getIconSvg - stats helper function
 function getIconSvg(key) {
   switch (key) {
     case 'stars':
@@ -168,6 +167,7 @@ function getIconSvg(key) {
   }
 }
 
+// renderStatsCard - stats helper function
 export function renderStatsCard(stats, theme, options = {}) {
   const {
     hide_rank = false,
