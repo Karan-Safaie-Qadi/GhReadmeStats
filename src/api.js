@@ -8,6 +8,7 @@ const USER_QUERY = `
       avatarUrl(size: 200)
       bio
       company
+// TODO: fallback values for missing stats
 // TODO: error page with card-style error SVGs
 // TODO: user-friendly error messages for invalid themes
 // TODO: GraphQL error extraction
