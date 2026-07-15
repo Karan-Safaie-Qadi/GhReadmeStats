@@ -1,8 +1,6 @@
-## Development Setup
+## Coding Standards
 
-```bash
-git clone https://github.com/Karan-Safaie-Qadi/GhReadmeStats.git
-cd GhReadmeStats
-npm install
-npm test
-```
+- Follow existing code style and conventions
+- Add tests for new functionality
+- Update documentation as needed
+- Keep commits atomic and well-described
