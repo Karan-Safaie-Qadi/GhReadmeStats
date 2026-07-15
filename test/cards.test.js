@@ -63,7 +63,7 @@ describe('renderStatsCard', () => {
     expect(svg).not.toContain('data-testid="stars"');
     expect(svg).not.toContain('data-testid="issues"');
     expect(svg).toContain('data-testid="prs"');
-    expect(svg).toContain('data-testid="repos"');
+    expect(svg).toContain('data-testid="contribs"');
   });
 
   it('renders with data-testid attributes', () => {
