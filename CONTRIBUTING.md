@@ -1,6 +1,3 @@
-## Pull Request Process
+## Code Review
 
-1. Update the README.md with details of changes
-2. Run the full test suite: `npm test`
-3. Ensure your code passes linting
-4. Submit the PR with a clear description
+All submissions require review. Maintainers may request changes before merging.
