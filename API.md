@@ -12,3 +12,4 @@
 // API.md - update 11 (86f76e25)
 // API.md - update 12 (5471ab18)
 // API.md - update 13 (e3160074)
+// API.md - update 14 (4f27835a)
