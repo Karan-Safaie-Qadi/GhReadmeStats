@@ -5,6 +5,9 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   USERNAME: Karan-Safaie-Qadi
   GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
@@ -29,6 +32,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.GH_PAGES_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./svgs
           destination_dir: svgs
