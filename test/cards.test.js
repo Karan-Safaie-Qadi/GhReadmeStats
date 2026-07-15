@@ -45,20 +45,41 @@ describe('renderStatsCard', () => {
 
   it('includes the username in the title', () => {
     const svg = renderStatsCard(mockStats, theme);
-    expect(svg).toContain('Test User');
+    expect(svg).toContain("Test User's GitHub Stats");
+  });
+
+  it('renders rank circle by default', () => {
+    const svg = renderStatsCard(mockStats, theme);
+    expect(svg).toContain('data-testid="rank-circle"');
   });
 
   it('hides rank when hide_rank is true', () => {
     const svg = renderStatsCard(mockStats, theme, { hide_rank: true });
-    expect(svg).not.toContain('Rank:');
+    expect(svg).not.toContain('data-testid="rank-circle"');
   });
 
   it('respects hide options', () => {
     const svg = renderStatsCard(mockStats, theme, { hide: ['stars', 'issues'] });
-    expect(svg).not.toContain('Total Stars');
-    expect(svg).not.toContain('Total Issues');
-    expect(svg).toContain('Total PRs');
-    expect(svg).toContain('Repositories');
+    expect(svg).not.toContain('data-testid="stars"');
+    expect(svg).not.toContain('data-testid="issues"');
+    expect(svg).toContain('data-testid="prs"');
+    expect(svg).toContain('data-testid="repos"');
+  });
+
+  it('renders with data-testid attributes', () => {
+    const svg = renderStatsCard(mockStats, theme);
+    expect(svg).toContain('data-testid="card-bg"');
+    expect(svg).toContain('data-testid="card-title"');
+    expect(svg).toContain('data-testid="main-card-body"');
+    expect(svg).toContain('data-testid="header"');
+  });
+
+  it('renders with correct label format', () => {
+    const svg = renderStatsCard(mockStats, theme);
+    expect(svg).toContain('Total Stars Earned:');
+    expect(svg).toContain('Total Commits:');
+    expect(svg).toContain('Total PRs:');
+    expect(svg).toContain('Total Issues:');
   });
 });
 
@@ -67,11 +88,11 @@ describe('renderTopLangsCard', () => {
 
   it('returns SVG with language bars', () => {
     const svg = renderTopLangsCard(mockLangs, theme);
-    expect(svg).toContain('Top Languages');
+    expect(svg).toContain('Most Used Languages');
     expect(svg).toContain('JavaScript');
     expect(svg).toContain('TypeScript');
-    expect(svg).toContain('40.0%');
-    expect(svg).toContain('30.0%');
+    expect(svg).toContain('40.00%');
+    expect(svg).toContain('30.00%');
   });
 
   it('shows no data message for empty langs', () => {
@@ -81,6 +102,13 @@ describe('renderTopLangsCard', () => {
 
   it('hides title when hide_title is set', () => {
     const svg = renderTopLangsCard(mockLangs, theme, { hide_title: true });
-    expect(svg).not.toContain('Top Languages');
+    expect(svg).not.toContain('Most Used Languages');
+  });
+
+  it('has card header with correct title', () => {
+    const svg = renderTopLangsCard(mockLangs, theme);
+    expect(svg).toContain('data-testid="header"');
+    expect(svg).toContain('data-testid="card-bg"');
+    expect(svg).toContain('data-testid="main-card-body"');
   });
 });
