@@ -4,3 +4,4 @@
 // .github/PULL_REQUEST_TEMPLATE.md - update 3 (732fd3af)
 // .github/PULL_REQUEST_TEMPLATE.md - update 4 (56b322e0)
 // .github/PULL_REQUEST_TEMPLATE.md - update 5 (fdc0dee4)
+// .github/PULL_REQUEST_TEMPLATE.md - update 6 (3d298387)
