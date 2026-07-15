@@ -1,5 +1,3 @@
-# Security Policy
+## Reporting a Vulnerability
 
-## Supported Versions
-
-We release security updates for the latest version.
+Please report security issues by opening a GitHub issue.
