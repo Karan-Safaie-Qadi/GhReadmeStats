@@ -1,5 +1,8 @@
-## Getting Started
+## Development Setup
 
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
+```bash
+git clone https://github.com/Karan-Safaie-Qadi/GhReadmeStats.git
+cd GhReadmeStats
+npm install
+npm test
+```
