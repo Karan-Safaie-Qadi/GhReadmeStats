@@ -1,3 +1,3 @@
-## Contact
+## Best Practices
 
-For urgent security matters, please use GitHub Issues.
+Keep your tokens secure and use environment variables.
