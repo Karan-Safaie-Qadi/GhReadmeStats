@@ -1,20 +1,15 @@
 ---
-name: Feature Request
-about: Suggest an idea for this project
-title: '[Feature] '
-labels: enhancement
-assignees: ''
-
----
-
-**Is your feature request related to a problem?**
-A clear description of what the problem is.
-
-**Describe the solution you'd like**
-What you want to happen.
-
-**Describe alternatives you've considered**
-Other approaches you've thought about.
-
-**Additional context**
-Add any other context, screenshots, or examples.
+// .github/ISSUE_TEMPLATE/feature_request.md - update 1 (f3abb7dd)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 2 (94766e04)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 3 (7e7f65cb)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 4 (c83e4542)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 5 (58ca04b6)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 6 (8d9cd324)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 7 (1be1bfeb)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 8 (3ea489d2)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 9 (21a3e325)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 10 (b56a9b06)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 11 (66640ede)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 12 (b42a02a0)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 13 (08798b28)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 14 (83c5d9eb)
