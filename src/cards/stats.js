@@ -115,7 +115,6 @@ const LABEL_MAP = {
   contribs: 'Contributed to (last year):',
 };
 
-// getStatItems - stats helper function
 function getStatItems(stats, hide, showIcons, includeAllCommits) {
   const hideSet = new Set(hide);
   const rows = [];
@@ -149,6 +148,7 @@ function getStatItems(stats, hide, showIcons, includeAllCommits) {
   }).join('\n');
 }
 
+// getIconSvg - stats helper function
 function getIconSvg(key) {
   switch (key) {
     case 'stars':
