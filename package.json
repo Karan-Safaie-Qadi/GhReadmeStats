@@ -1,0 +1,17 @@
+{
+  "name": "gh-readme-stats",
+  "version": "1.0.0",
+  "description": "Customizable GitHub Readme Stats – deploy on Cloudflare Workers",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev src/index.js",
+    "deploy": "wrangler deploy src/index.js --name gh-readme-stats",
+    "test": "vitest run"
+  },
+  "keywords": ["github-stats", "readme", "cloudflare-worker"],
+  "license": "MIT",
+  "devDependencies": {
+    "vitest": "^3.0.0",
+    "wrangler": "^4.0.0"
+  }
+}

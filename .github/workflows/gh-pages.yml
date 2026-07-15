@@ -1,0 +1,62 @@
+name: Generate SVGs for GitHub Pages
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+env:
+  USERNAME: Karan-Safaie-Qadi
+  GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - uses: actions/github-script@v7
+        id: fetch-stats
+        with:
+          script: |
+            const { fetchUserStats, fetchTopLanguages } = await import('${{ github.workspace }}/src/api.js');
+            const { renderStatsCard } = await import('${{ github.workspace }}/src/cards/stats.js');
+            const { renderTopLangsCard } = await import('${{ github.workspace }}/src/cards/top-langs.js');
+            const { getTheme } = await import('${{ github.workspace }}/src/themes.js');
+
+            const username = process.env.USERNAME;
+            const token = process.env.GITHUB_TOKEN;
+
+            const stats = await fetchUserStats(username, token);
+            const theme = getTheme('dark');
+            const svgStats = renderStatsCard(stats, theme);
+            const svgStatsLight = renderStatsCard(stats, getTheme('light'));
+
+            const langData = await fetchTopLanguages(username, token);
+            const svgLangs = renderTopLangsCard(langData, theme);
+            const svgLangsLight = renderTopLangsCard(langData, getTheme('light'));
+
+            const fs = require('fs');
+            const dir = '${{ github.workspace }}/svgs';
+            if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+            fs.writeFileSync(dir + '/stats-dark.svg', svgStats);
+            fs.writeFileSync(dir + '/stats-light.svg', svgStatsLight);
+            fs.writeFileSync(dir + '/top-langs-dark.svg', svgLangs);
+            fs.writeFileSync(dir + '/top-langs-light.svg', svgLangsLight);
+
+            return 'SVGs generated';
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./svgs
+          destination_dir: svgs
