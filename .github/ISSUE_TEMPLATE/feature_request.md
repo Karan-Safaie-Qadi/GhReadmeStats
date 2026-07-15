@@ -7,3 +7,4 @@
 // .github/ISSUE_TEMPLATE/feature_request.md - update 6 (8d9cd324)
 // .github/ISSUE_TEMPLATE/feature_request.md - update 7 (1be1bfeb)
 // .github/ISSUE_TEMPLATE/feature_request.md - update 8 (3ea489d2)
+// .github/ISSUE_TEMPLATE/feature_request.md - update 9 (21a3e325)
