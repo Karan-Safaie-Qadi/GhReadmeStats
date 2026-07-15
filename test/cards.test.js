@@ -75,11 +75,17 @@ describe('renderStatsCard', () => {
   });
 
   it('renders with correct label format', () => {
-    const svg = renderStatsCard(mockStats, theme);
+    const svg = renderStatsCard(mockStats, theme, { include_all_commits: true });
     expect(svg).toContain('Total Stars Earned:');
     expect(svg).toContain('Total Commits:');
     expect(svg).toContain('Total PRs:');
     expect(svg).toContain('Total Issues:');
+  });
+
+  it('shows year label when include_all_commits is false', () => {
+    const svg = renderStatsCard(mockStats, theme, { include_all_commits: false });
+    expect(svg).toContain('Commits (last year):');
+    expect(svg).toContain('data-testid="commits_year"');
   });
 });
 

@@ -108,18 +108,22 @@ function getRankCircle(rank) {
 const LABEL_MAP = {
   stars: 'Total Stars Earned:',
   commits: 'Total Commits:',
+  commits_year: 'Commits (last year):',
   prs: 'Total PRs:',
   issues: 'Total Issues:',
   repos: 'Repositories:',
   contribs: 'Contributed to (last year):',
 };
 
-function getStatItems(stats, hide, showIcons) {
+function getStatItems(stats, hide, showIcons, includeAllCommits) {
   const hideSet = new Set(hide);
   const rows = [];
 
   if (!hideSet.has('stars')) rows.push({ key: 'stars', value: kFormatter(stats.totalStars) });
-  if (!hideSet.has('commits')) rows.push({ key: 'commits', value: kFormatter(stats.totalCommits) });
+  if (!hideSet.has('commits')) {
+    const key = includeAllCommits ? 'commits' : 'commits_year';
+    rows.push({ key, value: kFormatter(stats.totalCommits) });
+  }
   if (!hideSet.has('prs')) rows.push({ key: 'prs', value: kFormatter(stats.totalPRs) });
   if (!hideSet.has('issues')) rows.push({ key: 'issues', value: kFormatter(stats.totalIssues) });
   if (!hideSet.has('contribs')) rows.push({ key: 'contribs', value: kFormatter(stats.contributedTo) });
@@ -169,6 +173,7 @@ export function renderStatsCard(stats, theme, options = {}) {
     show_icons = false,
     hide = [],
     hide_border = false,
+    include_all_commits = false,
   } = options;
 
   const rank = calculateRank(stats);
@@ -219,7 +224,7 @@ export function renderStatsCard(stats, theme, options = {}) {
   >
     ${hide_rank ? '' : getRankCircle(rank)}
     <svg x="0" y="0">
-      ${getStatItems(stats, hide, show_icons)}
+      ${getStatItems(stats, hide, show_icons, include_all_commits)}
     </svg>
   </g>
 </svg>`;

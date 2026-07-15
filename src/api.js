@@ -217,3 +217,122 @@ export async function fetchTopLanguages(username, token) {
 
   return { langs, total, username };
 }
+
+const STREAK_QUERY = `
+  query($username: String!) {
+    user(login: $username) {
+      name
+      login
+      contributionsCollection {
+        contributionCalendar {
+          totalContributions
+          weeks {
+            contributionDays {
+              contributionCount
+              date
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+function calculateStreaks(weeks) {
+  const days = [];
+  for (const week of weeks) {
+    for (const day of week.contributionDays) {
+      days.push({ date: day.date, count: day.contributionCount });
+    }
+  }
+
+  days.sort((a, b) => a.date.localeCompare(b.date));
+
+  const totalContributions = days.reduce((sum, d) => sum + d.count, 0);
+
+  let currentStreak = 0;
+  let currentStreakEnd = null;
+  let currentStreakStart = null;
+  for (let i = days.length - 1; i >= 0; i--) {
+    if (days[i].count > 0) {
+      currentStreak++;
+      if (!currentStreakEnd) currentStreakEnd = days[i].date;
+      currentStreakStart = days[i].date;
+    } else {
+      break;
+    }
+  }
+
+  let longestStreak = 0;
+  let longestStreakStart = null;
+  let longestStreakEnd = null;
+  let tempStreak = 0;
+  let tempStart = null;
+  for (let i = 0; i < days.length; i++) {
+    if (days[i].count > 0) {
+      if (tempStreak === 0) tempStart = days[i].date;
+      tempStreak++;
+      if (tempStreak > longestStreak) {
+        longestStreak = tempStreak;
+        longestStreakStart = tempStart;
+        longestStreakEnd = days[i].date;
+      }
+    } else {
+      tempStreak = 0;
+      tempStart = null;
+    }
+  }
+
+  const firstDay = days.length > 0 ? days[0].date : null;
+  const lastDay = days.length > 0 ? days[days.length - 1].date : null;
+
+  const formatRange = (start, end) => {
+    if (!start || !end) return '';
+    if (start === end) return formatDate(start);
+    return `${formatDate(start)} - ${formatDate(end)}`;
+  };
+
+  const isCurrentActive = (endDate) => {
+    if (!endDate) return false;
+    const d = new Date(endDate + 'T00:00:00Z');
+    const now = new Date();
+    const diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
+    return diffDays <= 1;
+  };
+
+  const totalRange = firstDay && lastDay
+    ? `${formatDate(firstDay)} - ${isCurrentActive(lastDay) ? 'Present' : formatDate(lastDay)}`
+    : '';
+
+  const currentRange = currentStreak > 0 && currentStreakStart && currentStreakEnd
+    ? formatRange(currentStreakStart, currentStreakEnd)
+    : currentStreak === 0 ? '0 days' : '';
+
+  const longestRange = longestStreak > 0 && longestStreakStart && longestStreakEnd
+    ? formatRange(longestStreakStart, longestStreakEnd)
+    : '';
+
+  return {
+    totalContributions,
+    currentStreak,
+    longestStreak,
+    totalRange,
+    currentRange,
+    longestRange,
+  };
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00Z');
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[d.getUTCMonth()]} ${d.getUTCDate()}`;
+}
+
+export async function fetchStreakStats(username, token) {
+  const data = await githubRequest(STREAK_QUERY, { username }, token);
+  const user = data.user;
+  if (!user) throw new Error(`User "${username}" not found`);
+
+  const calendar = user.contributionsCollection.contributionCalendar;
+  return calculateStreaks(calendar.weeks);
+}

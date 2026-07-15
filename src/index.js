@@ -1,6 +1,7 @@
-import { fetchUserStats, fetchTopLanguages } from './api.js';
+import { fetchUserStats, fetchTopLanguages, fetchStreakStats } from './api.js';
 import { renderStatsCard } from './cards/stats.js';
 import { renderTopLangsCard } from './cards/top-langs.js';
+import { renderStreakCard } from './cards/streak.js';
 import { getTheme, applyCustomColors } from './themes.js';
 import { parseBoolean } from './utils.js';
 
@@ -34,6 +35,7 @@ export default {
           show_icons: parseBoolean(params.get('show_icons')),
           hide: params.get('hide') ? params.get('hide').split(',') : [],
           hide_border: parseBoolean(params.get('hide_border')),
+          include_all_commits: parseBoolean(params.get('include_all_commits')),
         };
         const svg = renderStatsCard(stats, theme, options);
         return new Response(svg, {
@@ -59,7 +61,23 @@ export default {
         });
       }
 
-      return new Response('Not Found. Available endpoints: /api/stats, /api/top-langs', {
+      if (path === '/api/streak') {
+        const theme = applyCustomColors(getTheme(themeName), Object.fromEntries(params));
+        const streakData = await fetchStreakStats(username, token);
+        const options = {
+          hide_border: parseBoolean(params.get('hide_border')),
+        };
+        const svg = renderStreakCard(streakData, theme, options);
+        return new Response(svg, {
+          headers: {
+            'Content-Type': 'image/svg+xml; charset=utf-8',
+            'Cache-Control': 'public, max-age=300, s-maxage=300',
+            'Access-Control-Allow-Origin': '*',
+          },
+        });
+      }
+
+      return new Response('Not Found. Available endpoints: /api/stats, /api/top-langs, /api/streak', {
         status: 404,
         headers: { 'Content-Type': 'text/plain' },
       });
