@@ -10,7 +10,6 @@ const LINE_HEIGHT = 25;
 const LABEL_MARGIN = 199.01;
 const ICON_SIZE = 16;
 
-// getAnimations - stats helper function
 function getAnimations() {
   return `
     @keyframes scaleInAnimation {
@@ -27,6 +26,7 @@ function getAnimations() {
     }`;
 }
 
+// getStyles - stats helper function
 function getStyles(theme) {
   return `
     .header {
