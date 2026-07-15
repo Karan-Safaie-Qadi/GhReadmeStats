@@ -8,7 +8,7 @@
   aria-labelledby="descId"
 >
   <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: C+</title>
-  <desc id="descId">Total Stars Earned: 14, Total Commits: 2435, Total PRs: 9, Total Issues: 0, Contributed to (last year): 2</desc>
+  <desc id="descId">Total Stars Earned: 14, Total Commits: 1700, Total PRs: 35, Total Issues: 0, Contributed to (last year): 3</desc>
   <style>
     
     .header {
@@ -114,14 +114,14 @@
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Commits:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">2.4K</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">1.7K</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total PRs:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">9</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">35</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
@@ -135,7 +135,7 @@
     <g class="stagger" style="animation-delay: 1050ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Contributed to (last year):</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="contribs">2</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="contribs">3</text>
     </g>
   </g>
     </svg>
