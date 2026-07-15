@@ -1,3 +1,3 @@
-## Recognition
+## Contact
 
-We acknowledge security researchers who help improve our project.
+For urgent security matters, please use GitHub Issues.
