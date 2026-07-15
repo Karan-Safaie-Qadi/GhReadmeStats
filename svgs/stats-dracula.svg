@@ -13,7 +13,7 @@
     
     .header {
       font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-      fill: #fe428e;
+      fill: #ff6e96;
       animation: fadeInAnimation 0.8s ease-in-out forwards;
     }
     @supports(-moz-appearance: auto) {
@@ -21,7 +21,7 @@
     }
     .stat {
       font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif;
-      fill: #a9fef7;
+      fill: #f8f8f2;
     }
     @supports(-moz-appearance: auto) {
       .stat { font-size: 12px; }
@@ -32,17 +32,17 @@
     }
     .rank-text {
       font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif;
-      fill: #a9fef7;
+      fill: #f8f8f2;
       animation: scaleInAnimation 0.3s ease-in-out forwards;
     }
     .rank-circle-rim {
-      stroke: #fe428e;
+      stroke: #ff6e96;
       fill: none;
       stroke-width: 6;
       opacity: 0.2;
     }
     .rank-circle {
-      stroke: #fe428e;
+      stroke: #ff6e96;
       stroke-dasharray: 250;
       fill: none;
       stroke-width: 6;
@@ -53,7 +53,7 @@
       animation: rankAnimation 1s forwards ease-in-out;
     }
     .icon {
-      fill: #f8d847;
+      fill: #79dafa;
     }
     
     @keyframes scaleInAnimation {
@@ -77,7 +77,7 @@
     rx="4.5"
     height="99%"
     width="449"
-    fill="#141321"
+    fill="#282a36"
      stroke="#e4e2e2" stroke-opacity="1"
   />
 
