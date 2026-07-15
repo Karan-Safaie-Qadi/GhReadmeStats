@@ -86,7 +86,6 @@ const RANK_LEVELS = [
   { min: 100000, label: 'S+', color: 'gold' },
 ];
 
-// calculateRank - stats helper function
 function calculateRank(stats) {
   const score = stats.totalStars * 5 + stats.totalCommits * 0.5 + stats.totalPRs * 2 + stats.totalIssues * 1 + stats.followers * 3 + stats.contributedTo * 1;
   for (let i = RANK_LEVELS.length - 1; i >= 0; i--) {
@@ -95,6 +94,7 @@ function calculateRank(stats) {
   return 'D';
 }
 
+// getRankCircle - stats helper function
 function getRankCircle(rank) {
   return `
     <g data-testid="rank-circle" transform="translate(365, 47.5)">
