@@ -6,6 +6,13 @@
 
 ---
 
+![GitHub stars](https://img.shields.io/github/stars/Karan-Safaie-Qadi/GhReadmeStats?style=flat-square)
+![GitHub license](https://img.shields.io/github/license/Karan-Safaie-Qadi/GhReadmeStats?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/Karan-Safaie-Qadi/GhReadmeStats?style=flat-square)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/Karan-Safaie-Qadi/GhReadmeStats?style=flat-square)
+![Tests](https://img.shields.io/github/actions/workflow/status/Karan-Safaie-Qadi/GhReadmeStats/test.yml?branch=master&label=tests&style=flat-square)
+![Deploy](https://img.shields.io/github/actions/workflow/status/Karan-Safaie-Qadi/GhReadmeStats/deploy.yml?branch=master&label=deploy&style=flat-square)
+
 ## 🇬🇧 English
 
 ### Overview
