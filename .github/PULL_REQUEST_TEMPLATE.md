@@ -1,22 +1,15 @@
 ## Description
-
-Please include a summary of the change and which issue is fixed.
-
-## Type of change
-
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Documentation update
-- [ ] Code refactor
-- [ ] Test update
-
-## How Has This Been Tested?
-
-- [ ] `npm test` passes
-- [ ] Manual verification of SVG output
-
-## Checklist:
-
-- [ ] My code follows the project style
-- [ ] I have added tests that prove my fix/feature works
-- [ ] All tests pass
+// .github/PULL_REQUEST_TEMPLATE.md - update 1 (8eacda37)
+// .github/PULL_REQUEST_TEMPLATE.md - update 2 (e27d957f)
+// .github/PULL_REQUEST_TEMPLATE.md - update 3 (732fd3af)
+// .github/PULL_REQUEST_TEMPLATE.md - update 4 (56b322e0)
+// .github/PULL_REQUEST_TEMPLATE.md - update 5 (fdc0dee4)
+// .github/PULL_REQUEST_TEMPLATE.md - update 6 (3d298387)
+// .github/PULL_REQUEST_TEMPLATE.md - update 7 (cd508a37)
+// .github/PULL_REQUEST_TEMPLATE.md - update 8 (b404c675)
+// .github/PULL_REQUEST_TEMPLATE.md - update 9 (2e1e4bba)
+// .github/PULL_REQUEST_TEMPLATE.md - update 10 (21ff725c)
+// .github/PULL_REQUEST_TEMPLATE.md - update 11 (fa79278b)
+// .github/PULL_REQUEST_TEMPLATE.md - update 12 (5418f4e8)
+// .github/PULL_REQUEST_TEMPLATE.md - update 13 (53b653b2)
+// .github/PULL_REQUEST_TEMPLATE.md - update 14 (6c535e9a)
