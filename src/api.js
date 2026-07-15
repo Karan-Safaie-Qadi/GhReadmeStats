@@ -1,7 +1,7 @@
 const GITHUB_GRAPHQL = 'https://api.github.com/graphql';
 
 const USER_QUERY = `
-  query($login: String!) {
+  query($login: String!, $after: String) {
     user(login: $login) {
       name
       login
@@ -13,8 +13,12 @@ const USER_QUERY = `
         totalCommitContributions
         restrictedContributionsCount
       }
-      repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+      repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false) {
         totalCount
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
         nodes {
           name
           stargazerCount
@@ -45,9 +49,13 @@ const USER_QUERY = `
 `;
 
 const LANGS_QUERY = `
-  query($login: String!) {
+  query($login: String!, $after: String) {
     user(login: $login) {
-      repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+      repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
         nodes {
           name
           languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
@@ -87,13 +95,42 @@ async function githubRequest(query, variables, token) {
   return json.data;
 }
 
+async function fetchAllRepos(username, token) {
+  let repos = [];
+  let after = null;
+  let hasNext = true;
+
+  while (hasNext) {
+    const data = await githubRequest(USER_QUERY, { login: username, after }, token);
+    const user = data.user;
+    if (!user) throw new Error(`User "${username}" not found`);
+
+    const page = user.repositories.nodes || [];
+    repos = repos.concat(page);
+
+    const pageInfo = user.repositories.pageInfo;
+    hasNext = pageInfo?.hasNextPage && repos.length < 500;
+    after = pageInfo?.endCursor || null;
+
+    if (!hasNext || !after) break;
+  }
+
+  return repos;
+}
+
 export async function fetchUserStats(username, token, options = {}) {
   const { include_all_commits = false, count_private = false } = options;
-  const data = await githubRequest(USER_QUERY, { login: username }, token);
-  const user = data.user;
+  const firstPage = await githubRequest(USER_QUERY, { login: username, after: null }, token);
+  const user = firstPage.user;
   if (!user) throw new Error(`User "${username}" not found`);
 
-  const repos = user.repositories.nodes || [];
+  let repos = user.repositories.nodes || [];
+
+  if (user.repositories.pageInfo?.hasNextPage) {
+    const remaining = await fetchAllRepos(username, token);
+    repos = repos.concat(remaining.filter(r => !repos.some(ex => ex.name === r.name)));
+  }
+
   const totalStars = repos.reduce((sum, r) => sum + r.stargazerCount, 0);
   const totalForks = repos.reduce((sum, r) => sum + r.forkCount, 0);
 
@@ -133,12 +170,28 @@ export async function fetchUserStats(username, token, options = {}) {
 }
 
 export async function fetchTopLanguages(username, token) {
-  const data = await githubRequest(LANGS_QUERY, { login: username }, token);
-  const user = data.user;
-  if (!user) throw new Error(`User "${username}" not found`);
+  let repos = [];
+  let after = null;
+  let hasNext = true;
+  let attempts = 0;
+
+  while (hasNext && attempts < 5) {
+    const data = await githubRequest(LANGS_QUERY, { login: username, after }, token);
+    const user = data.user;
+    if (!user) throw new Error(`User "${username}" not found`);
+
+    const page = user.repositories.nodes || [];
+    repos = repos.concat(page);
+
+    const pageInfo = user.repositories.pageInfo;
+    hasNext = pageInfo?.hasNextPage || false;
+    after = pageInfo?.endCursor || null;
+    attempts++;
+
+    if (!after) break;
+  }
 
   const langMap = new Map();
-  const repos = user.repositories.nodes || [];
 
   for (const repo of repos) {
     const edges = repo.languages?.edges || [];
