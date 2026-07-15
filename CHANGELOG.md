@@ -1,5 +1,4 @@
-### Configuration
-- `hide` parameter to hide individual stats
-- `show_icons` for stat icons
-- `include_all_commits` for commit count options
-- `hide_border` and `hide_rank` options
+### Deployment
+- Cloudflare Pages with Workers Functions
+- GitHub Pages with scheduled SVG regeneration
+- Support for custom domains and caching
