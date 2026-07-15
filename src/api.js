@@ -82,7 +82,7 @@ async function githubRequest(query, variables, token) {
   });
 
   if (!resp.ok) {
-    throw new Error(`GitHub API error: ${resp.status} ${resp.statusText}`);
+    throw new Error(`GitHub API error: ${resp.status} ${resp.statusText}. Check your token permissions.`);
   }
 
   const json = await resp.json();
