@@ -24,7 +24,7 @@ async function generate() {
 
   const themes = [
     { name: 'dark', theme: getTheme('dark') },
-    { name: 'light', theme: getTheme('light') },
+    { name: 'default', theme: getTheme('default') },
     { name: 'radical', theme: getTheme('radical') },
     { name: 'tokyonight', theme: getTheme('tokyonight') },
   ];

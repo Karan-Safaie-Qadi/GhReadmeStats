@@ -2,31 +2,42 @@ import { describe, it, expect } from 'vitest';
 import { getTheme, applyCustomColors, themes } from '../src/themes.js';
 
 describe('getTheme', () => {
-  it('returns dark theme by default', () => {
+  it('returns default theme by default', () => {
     const theme = getTheme();
-    expect(theme.bg).toBe('#0d1117');
-    expect(theme.card).toBe('#1c2128');
+    expect(theme.title_color).toBe('2f80ed');
+    expect(theme.bg_color).toBe('fffefe');
   });
 
   it('returns built-in themes', () => {
-    expect(getTheme('light').bg).toBe('#ffffff');
-    expect(getTheme('radical').title).toBe('#fe428e');
-    expect(getTheme('tokyonight').accent).toBe('#7aa2f7');
+    expect(getTheme('dark').bg_color).toBe('151515');
+    expect(getTheme('radical').title_color).toBe('fe428e');
+    expect(getTheme('tokyonight').icon_color).toBe('bf91f3');
   });
 
-  it('falls back to dark for unknown themes', () => {
+  it('falls back to default for unknown themes', () => {
     const theme = getTheme('nonexistent');
-    expect(theme).toEqual(themes.dark);
+    expect(theme).toEqual(themes.default);
+  });
+
+  it('has all required color keys', () => {
+    for (const [name, t] of Object.entries(themes)) {
+      expect(t.title_color).toBeDefined(`${name}: title_color`);
+      expect(t.icon_color).toBeDefined(`${name}: icon_color`);
+      expect(t.text_color).toBeDefined(`${name}: text_color`);
+      expect(t.bg_color).toBeDefined(`${name}: bg_color`);
+      expect(t.border_color).toBeDefined(`${name}: border_color`);
+      expect(t.ring_color).toBeDefined(`${name}: ring_color`);
+    }
   });
 });
 
 describe('applyCustomColors', () => {
   it('overrides theme colors from params', () => {
     const theme = getTheme('dark');
-    const params = { bg_c: '#ff0000', title_c: '#00ff00' };
+    const params = { title_color: 'ff0000', bg_color: '00ff00' };
     const custom = applyCustomColors(theme, params);
-    expect(custom.bg).toBe('#ff0000');
-    expect(custom.title).toBe('#00ff00');
-    expect(custom.text).toBe('#8b949e');
+    expect(custom.title_color).toBe('ff0000');
+    expect(custom.bg_color).toBe('00ff00');
+    expect(custom.text_color).toBe('9f9f9f');
   });
 });

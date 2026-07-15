@@ -1,43 +1,140 @@
-import { escapeHtml } from '../utils.js';
+import { escapeHtml, measureText } from '../utils.js';
 
-const CARD_WIDTH = 350;
-const CARD_HEIGHT = 240;
-const PADDING = 25;
-const BAR_HEIGHT = 20;
-const BAR_GAP = 8;
+const CARD_WIDTH = 300;
+const CARD_HEIGHT = 285;
+const PADDING_LEFT = 25;
+const TITLE_Y = 35;
+const BODY_Y = 55;
+const LANG_ITEM_HEIGHT = 40;
+const BAR_WIDTH = 205;
+const BAR_HEIGHT = 8;
+
+function getAnimations() {
+  return `
+    @keyframes slideInAnimation {
+      from { width: 0; }
+      to { width: calc(100%-100px); }
+    }
+    @keyframes growWidthAnimation {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes fadeInAnimation {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }`;
+}
+
+function getStyles(theme) {
+  return `
+    .header {
+      font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+      fill: #${theme.title_color};
+      animation: fadeInAnimation 0.8s ease-in-out forwards;
+    }
+    @supports(-moz-appearance: auto) {
+      .header { font-size: 15.5px; }
+    }
+    .lang-name {
+      font: 400 11px "Segoe UI", Ubuntu, Sans-Serif;
+      fill: #${theme.text_color};
+    }
+    .stagger {
+      opacity: 0;
+      animation: fadeInAnimation 0.3s ease-in-out forwards;
+    }
+    .lang-progress {
+      animation: growWidthAnimation 0.6s ease-in-out forwards;
+    }`;
+}
 
 export function renderTopLangsCard(langData, theme, options = {}) {
   const { hide_title = false } = options;
   const { langs } = langData;
 
   if (!langs || langs.length === 0) {
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_WIDTH}" height="120" viewBox="0 0 ${CARD_WIDTH} 120">
-      <rect x="0.5" y="0.5" width="${CARD_WIDTH - 1}" height="119" rx="6" fill="${theme.card}" stroke="${theme.card_border}" stroke-width="1"/>
-      <text x="${CARD_WIDTH / 2}" y="65" fill="${theme.text}" font-size="14" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">No language data available</text>
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_WIDTH}" height="120" viewBox="0 0 ${CARD_WIDTH} 120" fill="none">
+      <rect x="0.5" y="0.5" rx="4.5" height="99%" width="${CARD_WIDTH - 1}" fill="#${theme.bg_color}" stroke="#${theme.border_color}" stroke-opacity="1"/>
+      <text x="${CARD_WIDTH / 2}" y="65" fill="#${theme.text_color}" font-size="14" text-anchor="middle" font-family="Segoe UI,Ubuntu,Sans-Serif">No language data available</text>
     </svg>`;
   }
 
   const topLangs = langs.slice(0, 5);
-  const barWidth = CARD_WIDTH - PADDING * 2 - 90;
-  const contentHeight = topLangs.length * (BAR_HEIGHT + BAR_GAP) + 40;
-  const height = Math.max(CARD_HEIGHT, contentHeight + 30);
+  const totalHeight = BODY_Y + topLangs.length * LANG_ITEM_HEIGHT + 20;
+  const height = Math.max(CARD_HEIGHT, totalHeight);
 
-  const header = hide_title ? '' : `<text x="${PADDING}" y="28" fill="${theme.title}" font-size="16" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Top Languages</text>`;
+  const header = hide_title ? '' : `
+  <g data-testid="card-title" transform="translate(${PADDING_LEFT}, ${TITLE_Y})">
+    <g transform="translate(0, 0)">
+      <text x="0" y="0" class="header" data-testid="header">Most Used Languages</text>
+    </g>
+  </g>`;
+  const titleEl = hide_title ? '<title id="titleId"></title>' : '<title id="titleId">Most Used Languages</title>';
+  const descEl = hide_title ? '<desc id="descId"></desc>' : `<desc id="descId">${topLangs.map(l => `${l.name}: ${l.percent.toFixed(1)}%`).join(', ')}</desc>`;
 
-  const bars = topLangs.map((lang, i) => {
-    const y = (hide_title ? 20 : 50) + i * (BAR_HEIGHT + BAR_GAP);
-    const barLen = (lang.percent / 100) * barWidth;
+  const items = topLangs.map((lang, i) => {
+    const delay = 450 + i * 150;
+    const y = i * LANG_ITEM_HEIGHT;
+    const percent = lang.percent.toFixed(2);
 
     return `
-    <text x="${PADDING}" y="${y + BAR_HEIGHT - 4}" fill="${theme.text}" font-size="13" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">${escapeHtml(lang.name)}</text>
-    <rect x="${PADDING + 85}" y="${y}" width="${barWidth}" height="${BAR_HEIGHT}" rx="4" fill="${theme.card_border}"/>
-    <rect x="${PADDING + 85}" y="${y}" width="${Math.max(barLen, 4)}" height="${BAR_HEIGHT}" rx="4" fill="${lang.color}"/>
-    <text x="${CARD_WIDTH - PADDING}" y="${y + BAR_HEIGHT - 4}" fill="${theme.text}" font-size="12" text-anchor="end" font-family="Segoe UI,Helvetica,Arial,sans-serif">${lang.percent.toFixed(1)}%</text>`;
-  });
+    <g transform="translate(0, ${y})">
+      <g class="stagger" style="animation-delay: ${delay}ms">
+        <text data-testid="lang-name" x="2" y="15" class="lang-name">${escapeHtml(lang.name)}</text>
+        <text x="215" y="34" class="lang-name">${percent}%</text>
+        <svg width="${BAR_WIDTH}" x="0" y="25">
+          <rect rx="5" ry="5" x="0" y="0" width="${BAR_WIDTH}" height="${BAR_HEIGHT}" fill="#ddd"></rect>
+          <svg data-testid="lang-progress" width="${percent}%">
+            <rect
+              height="${BAR_HEIGHT}"
+              fill="${lang.color}"
+              rx="5" ry="5" x="0" y="0"
+              class="lang-progress"
+              style="animation-delay: ${delay + 300}ms;"
+            />
+          </svg>
+        </svg>
+      </g>
+    </g>`;
+  }).join('');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${CARD_WIDTH}" height="${height}" viewBox="0 0 ${CARD_WIDTH} ${height}">
-  <rect x="0.5" y="0.5" width="${CARD_WIDTH - 1}" height="${height - 1}" rx="6" fill="${theme.card}" stroke="${theme.card_border}" stroke-width="1"/>
+  return `<svg
+  width="${CARD_WIDTH}"
+  height="${height}"
+  viewBox="0 0 ${CARD_WIDTH} ${height}"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-labelledby="descId"
+>
+  ${titleEl}
+  ${descEl}
+  <style>
+    ${getStyles(theme)}
+    ${getAnimations()}
+  </style>
+
+  <rect
+    data-testid="card-bg"
+    x="0.5"
+    y="0.5"
+    rx="4.5"
+    height="99%"
+    width="${CARD_WIDTH - 1}"
+    fill="#${theme.bg_color}"
+    stroke="#${theme.border_color}"
+    stroke-opacity="1"
+  />
+
   ${header}
-  ${bars.join('\n  ')}
+
+  <g
+    data-testid="main-card-body"
+    transform="translate(0, ${BODY_Y})"
+  >
+    <svg data-testid="lang-items" x="${PADDING_LEFT}">
+      ${items}
+    </svg>
+  </g>
 </svg>`;
 }
