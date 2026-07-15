@@ -103,7 +103,7 @@ async function fetchAllRepos(username, token) {
   while (hasNext) {
     const data = await githubRequest(USER_QUERY, { login: username, after }, token);
     const user = data.user;
-    if (!user) throw new Error(`User "${username}" not found`);
+    if (!user) throw new Error(`User "${username}" not found. Please check the username and try again.`);
 
     const page = user.repositories.nodes || [];
     repos = repos.concat(page);
