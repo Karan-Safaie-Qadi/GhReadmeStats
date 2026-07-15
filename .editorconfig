@@ -1,12 +1,15 @@
-root = true
-
-[*]
-indent_style = space
-indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
-
-[*.md]
-trim_trailing_whitespace = false
+# EditorConfig
+// .editorconfig - update 1 (e06f49cc)
+// .editorconfig - update 2 (5d2e0004)
+// .editorconfig - update 3 (6f4d3605)
+// .editorconfig - update 4 (b28345ac)
+// .editorconfig - update 5 (449a2330)
+// .editorconfig - update 6 (c5d25554)
+// .editorconfig - update 7 (ca98c264)
+// .editorconfig - update 8 (c121aeda)
+// .editorconfig - update 9 (243a98e6)
+// .editorconfig - update 10 (4773d714)
+// .editorconfig - update 11 (41e93011)
+// .editorconfig - update 12 (ff419e74)
+// .editorconfig - update 13 (cb3eff75)
+// .editorconfig - update 14 (402b9a98)
