@@ -12,3 +12,4 @@
 // .github/ISSUE_TEMPLATE/bug_report.md - update 11 (63fd48f1)
 // .github/ISSUE_TEMPLATE/bug_report.md - update 12 (9f4a9b35)
 // .github/ISSUE_TEMPLATE/bug_report.md - update 13 (633189c3)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 14 (1bb95232)
