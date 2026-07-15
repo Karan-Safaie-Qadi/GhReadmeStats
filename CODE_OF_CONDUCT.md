@@ -1,5 +1,5 @@
-# Code of Conduct
+## Our Standards
 
-## Our Pledge
-
-We pledge to make participation in our project a harassment-free experience.
+- Using welcoming and inclusive language
+- Being respectful of differing viewpoints
+- Gracefully accepting constructive criticism
