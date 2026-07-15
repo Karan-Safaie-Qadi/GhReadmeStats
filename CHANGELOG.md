@@ -1,3 +1,6 @@
-# Changelog
+## [1.0.0] - 2026-07-15
 
-All notable changes to GhReadmeStats will be documented here.
+### Added
+- GitHub Stats card with rank visualization
+- Top Languages card with progress bars
+- Streak Stats card with contribution tracking
