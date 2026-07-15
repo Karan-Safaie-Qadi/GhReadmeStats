@@ -8,6 +8,7 @@ const USER_QUERY = `
       avatarUrl(size: 200)
       bio
       company
+// TODO: user-friendly error messages for invalid themes
 // TODO: GraphQL error extraction
 // TODO: error handling for rate limiting
       location
