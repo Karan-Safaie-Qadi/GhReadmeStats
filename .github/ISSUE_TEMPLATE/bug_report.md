@@ -6,3 +6,4 @@
 // .github/ISSUE_TEMPLATE/bug_report.md - update 5 (1aee68bc)
 // .github/ISSUE_TEMPLATE/bug_report.md - update 6 (cb859de7)
 // .github/ISSUE_TEMPLATE/bug_report.md - update 7 (c34f261f)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 8 (90468f2f)
