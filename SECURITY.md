@@ -1,3 +1,3 @@
-## Reporting a Vulnerability
+## Disclosure Policy
 
-Please report security issues by opening a GitHub issue.
+We follow responsible disclosure practices for all security issues.
