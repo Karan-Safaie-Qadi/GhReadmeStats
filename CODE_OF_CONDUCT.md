@@ -1,3 +1,3 @@
-## Enforcement
+## Attribution
 
-Instances of unacceptable behavior may be reported to the project maintainers.
+This Code of Conduct is adapted from the Contributor Covenant, version 2.0.
