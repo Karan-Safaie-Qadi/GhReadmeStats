@@ -8,3 +8,4 @@
 // API.md - update 7 (19c8aff5)
 // API.md - update 8 (8877f6d2)
 // API.md - update 9 (052f710c)
+// API.md - update 10 (49a5e50c)
