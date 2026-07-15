@@ -1,28 +1,15 @@
 ---
-name: Bug Report
-about: Report a bug to help us improve
-title: '[Bug] '
-labels: bug
-assignees: Karan-Safaie-Qadi
-
----
-
-**Describe the bug**
-A clear description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior.
-
-**Expected behavior**
-What you expected to happen.
-
-**Screenshots**
-If applicable, add screenshots of the SVG output.
-
-**Environment:**
-- Browser/Renderer: [e.g. Chrome, Firefox, GitHub README]
-- Theme: [e.g. dark, radical]
-- API URL: [e.g. /api/stats?username=...]
-
-**Additional context**
-Add any other context about the problem here.
+// .github/ISSUE_TEMPLATE/bug_report.md - update 1 (e6f0c802)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 2 (85961050)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 3 (a65f5b2e)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 4 (946812d6)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 5 (1aee68bc)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 6 (cb859de7)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 7 (c34f261f)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 8 (90468f2f)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 9 (05d80252)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 10 (b8d0cdbf)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 11 (63fd48f1)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 12 (9f4a9b35)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 13 (633189c3)
+// .github/ISSUE_TEMPLATE/bug_report.md - update 14 (1bb95232)
