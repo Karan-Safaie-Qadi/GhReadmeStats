@@ -25,7 +25,6 @@ function getAnimations() {
     }`;
 }
 
-// getStyles - top-langs helper function
 function getStyles(theme) {
   return `
     .header {
@@ -49,6 +48,7 @@ function getStyles(theme) {
     }`;
 }
 
+// renderTopLangsCard - top-langs helper function
 export function renderTopLangsCard(langData, theme, options = {}) {
   const { hide_title = false } = options;
   const { langs } = langData;
