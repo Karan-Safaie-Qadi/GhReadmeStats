@@ -1,3 +1,3 @@
-## Attribution
+## Enforcement Guidelines
 
-This Code of Conduct is adapted from the Contributor Covenant, version 2.0.
+Project maintainers will follow these guidelines in determining consequences.
