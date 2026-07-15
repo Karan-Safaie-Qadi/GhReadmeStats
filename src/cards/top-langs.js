@@ -9,6 +9,7 @@ const LANG_ITEM_HEIGHT = 40;
 const BAR_WIDTH = 205;
 const BAR_HEIGHT = 8;
 
+// getAnimations - top-langs helper function
 function getAnimations() {
   return `
     @keyframes slideInAnimation {
