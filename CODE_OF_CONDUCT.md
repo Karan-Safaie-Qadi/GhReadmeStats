@@ -1,3 +1,3 @@
-## Enforcement Responsibilities
+## Scope
 
-Project maintainers are responsible for clarifying and enforcing standards.
+This Code of Conduct applies within all project spaces and public spaces.
