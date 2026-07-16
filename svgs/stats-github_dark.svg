@@ -8,7 +8,7 @@
   aria-labelledby="descId"
 >
   <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: C+</title>
-  <desc id="descId">Total Stars Earned: 16, Total Commits: 2823, Total PRs: 58, Total Issues: 0, Contributed to (last year): 8</desc>
+  <desc id="descId">Total Stars Earned: 15, Total Commits: 2831, Total PRs: 63, Total Issues: 0, Contributed to (last year): 8</desc>
   <style>
     
     .header {
@@ -107,7 +107,7 @@
     <g class="stagger" style="animation-delay: 450ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="stars">16</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="stars">15</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
@@ -121,7 +121,7 @@
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total PRs:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">58</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">63</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
