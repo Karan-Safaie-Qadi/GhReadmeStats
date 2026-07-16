@@ -54,7 +54,7 @@
       <g style='isolation: isolate'>
         <g transform='translate(82.5, 48)'>
           <text x='0' y='32' stroke-width='0' text-anchor='middle' class='big-number' style='opacity: 0; animation: fadein 0.5s linear forwards 0.6s'>
-            2.8K
+            2.9K
           </text>
         </g>
         <g transform='translate(82.5, 84)'>
@@ -78,7 +78,7 @@
         </g>
         <g transform='translate(247.5, 48)'>
           <text x='0' y='32' stroke-width='0' text-anchor='middle' class='current-streak-num' style='animation: currstreak 0.6s linear forwards'>
-            7
+            8
           </text>
         </g>
         <g transform='translate(247.5, 108)'>
@@ -88,7 +88,7 @@
         </g>
         <g transform='translate(247.5, 145)'>
           <text x='0' y='21' stroke-width='0' text-anchor='middle' class='range-text' style='opacity: 0; animation: fadein 0.5s linear forwards 0.9s'>
-            Jul 10 - Jul 16
+            Jul 10 - Jul 17
           </text>
         </g>
       </g>
