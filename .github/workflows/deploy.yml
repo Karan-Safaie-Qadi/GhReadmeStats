@@ -27,7 +27,7 @@ jobs:
 
       - name: Set GITHUB_TOKEN for Worker
         shell: bash
-        run: echo "${{ secrets.GH_PAGES_TOKEN }}" | npx wrangler pages secret put GITHUB_TOKEN --project-name gh-readme-stats --branch master
+        run: echo "${{ github.token }}" | npx wrangler pages secret put GITHUB_TOKEN --project-name gh-readme-stats || true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
