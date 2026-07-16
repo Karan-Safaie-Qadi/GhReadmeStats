@@ -25,6 +25,12 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Set GITHUB_TOKEN for Worker
+        shell: bash
+        run: echo "${{ secrets.GH_PAGES_TOKEN }}" | npx wrangler pages secret put GITHUB_TOKEN --project-name gh-readme-stats --branch master
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy . --project-name gh-readme-stats --branch master
         env:
