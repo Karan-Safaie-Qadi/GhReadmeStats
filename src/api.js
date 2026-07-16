@@ -12,6 +12,9 @@ const USER_QUERY = `
       contributionsCollection {
         totalCommitContributions
         restrictedContributionsCount
+        contributionCalendar {
+          totalContributions
+        }
       }
       repositories(first: 100, after: $after, ownerAffiliations: OWNER, isFork: false) {
         totalCount
@@ -133,17 +136,12 @@ export async function fetchUserStats(username, token, options = {}) {
 
   const totalStars = repos.reduce((sum, r) => sum + r.stargazerCount, 0);
   const totalForks = repos.reduce((sum, r) => sum + r.forkCount, 0);
+  const yearCommits = user.contributionsCollection.totalCommitContributions + 
+(user.contributionsCollection.restrictedContributionsCount || 0);
 
-  const yearCommits = user.contributionsCollection.totalCommitContributions + user.contributionsCollection.restrictedContributionsCount;
+  const totalContribs = user.contributionsCollection.contributionCalendar?.totalContributions || yearCommits;
 
-  let allTimeCommits = yearCommits;
-  if (include_all_commits) {
-    const repoCommits = repos.reduce((sum, r) => {
-      const count = r.defaultBranchRef?.target?.history?.totalCount || 0;
-      return sum + count;
-    }, 0);
-    allTimeCommits = Math.max(yearCommits, repoCommits);
-  }
+  let allTimeCommits = include_all_commits ? totalContribs : yearCommits;
 
   const totalRepos = count_private
     ? user.repositories.totalCount

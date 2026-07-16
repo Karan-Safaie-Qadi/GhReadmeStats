@@ -107,7 +107,7 @@ function getRankCircle(rank) {
 
 const LABEL_MAP = {
   stars: 'Total Stars Earned:',
-  commits: 'Total Commits:',
+  commits: 'Total Contributions:',
   commits_year: 'Commits (last year):',
   prs: 'Total PRs:',
   issues: 'Total Issues:',
