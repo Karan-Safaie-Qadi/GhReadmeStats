@@ -8,7 +8,7 @@
   aria-labelledby="descId"
 >
   <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: B+ (41th percentile)</title>
-  <desc id="descId">Total Stars Earned: 30, Total Commits: 3233, Total PRs: 197, Total Issues: 0, Contributed to (last year): 9</desc>
+  <desc id="descId">Total Stars Earned: 30, Total Commits: 3260, Total PRs: 206, Total Issues: 0, Contributed to (last year): 10</desc>
   <style>
     
     .header {
@@ -66,7 +66,7 @@
     }
     @keyframes rankAnimation {
       from { stroke-dashoffset: 251.32741228718345; }
-      to { stroke-dashoffset: 103.57381474175159; }
+      to { stroke-dashoffset: 102.95986532609948; }
     }
   </style>
 
@@ -114,14 +114,14 @@
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Contributions:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">3.2K</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">3.3K</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total PRs:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">197</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">206</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
@@ -135,7 +135,7 @@
     <g class="stagger" style="animation-delay: 1050ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Contributed to (last year):</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="contribs">9</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="contribs">10</text>
     </g>
   </g>
     </svg>
