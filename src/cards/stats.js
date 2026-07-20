@@ -10,7 +10,7 @@ const LINE_HEIGHT = 25;
 const LABEL_MARGIN = 199.01;
 const ICON_SIZE = 16;
 
-function getAnimations() {
+function getAnimations(rankCircleFinalOffset) {
   return `
     @keyframes scaleInAnimation {
       from { transform: translate(-5px, 5px) scale(0); }
@@ -22,7 +22,7 @@ function getAnimations() {
     }
     @keyframes rankAnimation {
       from { stroke-dashoffset: 251.32741228718345; }
-      to { stroke-dashoffset: 204.64774444508348; }
+      to { stroke-dashoffset: ${rankCircleFinalOffset}; }
     }`;
 }
 
@@ -60,7 +60,7 @@ function getStyles(theme) {
     }
     .rank-circle {
       stroke: #${theme.ring_color};
-      stroke-dasharray: 250;
+      stroke-dasharray: 251.32741228718345;
       fill: none;
       stroke-width: 6;
       stroke-linecap: round;
@@ -74,24 +74,45 @@ function getStyles(theme) {
     }`;
 }
 
-const RANK_LEVELS = [
-  { min: 0, label: 'D', color: 'red' },
-  { min: 500, label: 'C', color: 'orange' },
-  { min: 1000, label: 'C+', color: 'yellow' },
-  { min: 2000, label: 'B', color: 'yellowgreen' },
-  { min: 5000, label: 'B+', color: 'green' },
-  { min: 10000, label: 'A', color: 'green' },
-  { min: 20000, label: 'A+', color: 'teal' },
-  { min: 50000, label: 'S', color: 'blueviolet' },
-  { min: 100000, label: 'S+', color: 'gold' },
-];
+const THRESHOLDS = [1, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
+const LEVELS = ["S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
 
-function calculateRank(stats) {
-  const score = stats.totalStars * 5 + stats.totalCommits * 0.5 + stats.totalPRs * 2 + stats.totalIssues * 1 + stats.followers * 3 + stats.contributedTo * 1;
-  for (let i = RANK_LEVELS.length - 1; i >= 0; i--) {
-    if (score >= RANK_LEVELS[i].min) return RANK_LEVELS[i].label;
-  }
-  return 'D';
+function exponential_cdf(x) {
+  return 1 - 2 ** -x;
+}
+
+function log_normal_cdf(x) {
+  return x / (1 + x);
+}
+
+function calculateRank({ totalCommits, totalPRs, totalIssues, totalStars, followers }, includeAllCommits) {
+  const COMMITS_MEDIAN = includeAllCommits ? 1000 : 250;
+  const COMMITS_WEIGHT = 2;
+  const PRS_MEDIAN = 50;
+  const PRS_WEIGHT = 3;
+  const ISSUES_MEDIAN = 25;
+  const ISSUES_WEIGHT = 1;
+  const STARS_MEDIAN = 50;
+  const STARS_WEIGHT = 4;
+  const FOLLOWERS_MEDIAN = 10;
+  const FOLLOWERS_WEIGHT = 1;
+
+  const TOTAL_WEIGHT =
+    COMMITS_WEIGHT + PRS_WEIGHT + ISSUES_WEIGHT + STARS_WEIGHT + FOLLOWERS_WEIGHT;
+
+  const rank =
+    1 -
+    (COMMITS_WEIGHT * exponential_cdf(totalCommits / COMMITS_MEDIAN) +
+      PRS_WEIGHT * exponential_cdf(totalPRs / PRS_MEDIAN) +
+      ISSUES_WEIGHT * exponential_cdf(totalIssues / ISSUES_MEDIAN) +
+      STARS_WEIGHT * log_normal_cdf(totalStars / STARS_MEDIAN) +
+      FOLLOWERS_WEIGHT * log_normal_cdf(followers / FOLLOWERS_MEDIAN)) /
+      TOTAL_WEIGHT;
+
+  const percentile = rank * 100;
+  const level = LEVELS[THRESHOLDS.findIndex((t) => percentile <= t)] || "C";
+
+  return { level, percentile };
 }
 
 function getRankCircle(rank) {
@@ -100,7 +121,7 @@ function getRankCircle(rank) {
       <circle class="rank-circle-rim" cx="-10" cy="8" r="40" />
       <circle class="rank-circle" cx="-10" cy="8" r="40" />
       <g class="rank-text">
-        <text x="-5" y="3" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="level-rank-icon">${rank}</text>
+        <text x="-5" y="3" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="level-rank-icon">${rank.level}</text>
       </g>
     </g>`;
 }
@@ -177,7 +198,8 @@ export function renderStatsCard(stats, theme, options = {}) {
     include_all_commits = false,
   } = options;
 
-  const rank = calculateRank(stats);
+  const rank = calculateRank(stats, include_all_commits);
+  const rankCircleFinalOffset = 251.32741228718345 * (rank.percentile / 100);
   const title = `${escapeHtml(stats.name)}'s GitHub Stats`;
   const desc = `Total Stars Earned: ${stats.totalStars}, Total Commits: ${stats.totalCommits}, Total PRs: ${stats.totalPRs}, Total Issues: ${stats.totalIssues}, Contributed to (last year): ${stats.contributedTo}`;
 
@@ -192,11 +214,11 @@ export function renderStatsCard(stats, theme, options = {}) {
   role="img"
   aria-labelledby="descId"
 >
-  <title id="titleId">${title}, Rank: ${rank}</title>
+  <title id="titleId">${title}, Rank: ${rank.level} (${Math.round(rank.percentile)}th percentile)</title>
   <desc id="descId">${desc}</desc>
   <style>
     ${getStyles(theme)}
-    ${getAnimations()}
+    ${getAnimations(rankCircleFinalOffset)}
   </style>
 
   <rect
