@@ -14,41 +14,41 @@ function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (token) {
-      localStorage.setItem('gh_token', token);
-      fetchData();
-    }
+    if (token) fetchAll();
   }, []);
 
-  async function fetchData() {
-    if (!token) return;
+  async function fetchAll() {
+    const t = token || localStorage.getItem('gh_token');
+    if (!t) return;
     setLoading(true);
     setError('');
     try {
-      const u = await validateToken(token);
+      const u = await validateToken(t);
       setUser(u);
-      const s = await fetchUserStats(u.login, token);
+      const [s, l, st] = await Promise.all([
+        fetchUserStats(u.login, t),
+        fetchTopLanguages(u.login, t),
+        fetchStreakStats(u.login, t),
+      ]);
       setStats(s);
-      const l = await fetchTopLanguages(u.login, token);
       setLangData(l);
-      const st = await fetchStreakStats(u.login, token);
       setStreakData(st);
+      localStorage.setItem('gh_token', t);
     } catch (e) {
       setError(e.message);
-      if (e.message.includes('401') || e.message.includes('Bad credentials')) {
-        setToken('');
+      if (e.message.includes('401') || e.message.toLowerCase().includes('bad credential')) {
         localStorage.removeItem('gh_token');
-        setUser(null);
+        setToken('');
       }
     } finally {
       setLoading(false);
     }
   }
 
-  function handleLogin(newToken) {
-    setToken(newToken);
-    localStorage.setItem('gh_token', newToken);
-    fetchData();
+  function handleLogin(t) {
+    setToken(t);
+    localStorage.setItem('gh_token', t);
+    fetchAll();
   }
 
   function handleLogout() {
@@ -64,12 +64,12 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="header-content">
-          <h1>GhReadmeStats Dashboard</h1>
+          <h1>GhReadmeStats</h1>
           {user && (
             <div className="user-info">
               <img src={user.avatar} alt="" className="user-avatar" />
-              <span>@{user.login}</span>
-              <button className="btn btn-sm" onClick={fetchData} disabled={loading}>Refresh</button>
+              <span>{user.login}</span>
+              <button className="btn btn-sm btn-outline" onClick={fetchAll} disabled={loading}>Refresh</button>
               <button className="btn btn-sm btn-outline" onClick={handleLogout}>Logout</button>
             </div>
           )}
@@ -84,10 +84,9 @@ function App() {
             stats={stats}
             langData={langData}
             streakData={streakData}
-            token={token}
             loading={loading}
             error={error}
-            onRefresh={fetchData}
+            onRefresh={fetchAll}
           />
         )}
       </main>
