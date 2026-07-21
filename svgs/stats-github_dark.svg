@@ -7,8 +7,8 @@
   role="img"
   aria-labelledby="descId"
 >
-  <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: B+ (41th percentile)</title>
-  <desc id="descId">Total Stars Earned: 30, Total Commits: 3736, Total PRs: 190, Total Issues: 0, Contributed to (last year): 4</desc>
+  <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: B+ (40th percentile)</title>
+  <desc id="descId">Total Stars Earned: 30, Total Commits: 4282, Total PRs: 190, Total Issues: 0, Contributed to (last year): 4</desc>
   <style>
     
     .header {
@@ -66,7 +66,7 @@
     }
     @keyframes rankAnimation {
       from { stroke-dashoffset: 251.32741228718345; }
-      to { stroke-dashoffset: 102.59827842230018; }
+      to { stroke-dashoffset: 101.51770375649882; }
     }
   </style>
 
@@ -114,7 +114,7 @@
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Contributions:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">3.7K</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">4.3K</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
