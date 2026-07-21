@@ -2,15 +2,5 @@ name = "gh-readme-stats"
 compatibility_date = "2026-07-01"
 pages_build_output_dir = "public"
 
-[[d1_databases]]
-binding = "DB"
-database_name = "gh-readme-stats-db"
-database_id = ""
-
 [env.production]
 vars = { THEME_DEFAULT = "dark", CACHE_TTL = "300" }
-
-[env.production.d1_databases]
-binding = "DB"
-database_name = "gh-readme-stats-db"
-database_id = ""
