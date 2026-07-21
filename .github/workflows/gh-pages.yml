@@ -25,15 +25,29 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install dependencies (root)
         run: npm ci
 
       - name: Generate SVGs
         run: node scripts/generate-svgs.mjs ./svgs
 
+      - name: Install dependencies (dashboard)
+        working-directory: ./dashboard
+        run: npm ci
+
+      - name: Build dashboard
+        working-directory: ./dashboard
+        run: npx vite build
+
+      - name: Prepare output
+        run: |
+          mkdir -p ./publish/svgs ./publish/dashboard
+          cp -r ./svgs/* ./publish/svgs/
+          cp -r ./dashboard/dist/* ./publish/dashboard/
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./svgs
-          destination_dir: svgs
+          publish_dir: ./publish
+          keep_files: false
