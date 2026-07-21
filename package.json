@@ -7,7 +7,7 @@
     "dev": "wrangler dev src/index.js",
     "deploy": "wrangler deploy src/index.js --name gh-readme-stats",
     "test": "vitest run",
-    "build:dashboard": "cd dashboard && npm ci && npx vite build"
+    "generate": "node scripts/generate-svgs.mjs ./svgs"
   },
   "keywords": ["github-stats", "readme", "cloudflare-worker"],
   "license": "MIT",

@@ -1,119 +1,48 @@
 # GhReadmeStats
 
-Dynamic GitHub stats cards for your profile README. Generate beautiful SVG cards showing your GitHub statistics, top languages, contribution streaks, and more.
+Dynamic GitHub stats cards for your profile README. Fork this repo and set it up for your own GitHub profile.
 
-## Features
+## Quick Start (Fork & Deploy)
 
-- **Stats Card** — GitHub statistics with rank visualization
-- **Top Languages Card** — Most used programming languages
-- **Streak Card** — Contribution streak tracking
-- **WakaTime Card** — Coding activity from WakaTime
-- **Multiple Themes** — 50+ built-in color themes
-- **Customizable** — Hide stats, change colors, toggle animations
-- **Responsive SVGs** — Works on all devices and platforms
-- **Caching** — Optimized with CDN and browser caching
-- **API Access** — Dynamic card generation via API
-- **Static Export** — Pre-generated SVGs for offline use
+1. **Fork** this repository
+2. Go to your fork **Settings → Secrets and variables → Actions**
+3. Add a new secret named `GH_PAGES_TOKEN` with a [GitHub PAT](https://github.com/settings/tokens) (scopes: `repo`, `read:user`)
+4. Edit `.github/workflows/gh-pages.yml` and change `USERNAME` to **your** GitHub username
+5. Go to **Settings → Pages** and set Source to **GitHub Actions**
+6. Push a commit to trigger the workflow (or go to Actions tab and run "Generate SVGs for GitHub Pages")
+7. Your SVGs will be at:
+```
+https://YOUR_USERNAME.github.io/GhReadmeStats/svgs/stats-dark.svg
+```
 
-## Quick Start
-
-Add to your GitHub profile README:
+### Profile README
 
 ```markdown
-![GitHub Stats](https://gh-readme-stats.pages.dev/api/stats?username=yourname)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://YOUR_USERNAME.github.io/GhReadmeStats/svgs/stats-dark.svg">
+  <img src="https://YOUR_USERNAME.github.io/GhReadmeStats/svgs/stats-default.svg">
+</picture>
 ```
 
-Or use the static SVG:
+## Cards
 
-```markdown
-![GitHub Stats](https://Karan-Safaie-Qadi.github.io/GhReadmeStats/svgs/stats-dark.svg)
-```
+| Card | URL |
+|------|-----|
+| Stats | `/svgs/stats-dark.svg` |
+| Top Languages | `/svgs/top-langs-dark.svg` |
+| Streak | `/svgs/streak-dark.svg` |
 
-## API Endpoints
-
-### Stats Card
-
-```
-GET /api/stats?username=USERNAME&theme=THEME
-```
-
-**Parameters:**
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `username` | string | — | GitHub username (required) |
-| `theme` | string | `default` | Color theme name |
-| `show_icons` | bool | `false` | Show stat icons |
-| `hide_rank` | bool | `false` | Hide rank circle |
-| `include_all_commits` | bool | `false` | Show all-time commits |
-| `hide` | string | — | Comma-separated stats to hide |
-| `hide_border` | bool | `false` | Hide card border |
-
-### Top Languages Card
-
-```
-GET /api/top-langs?username=USERNAME&theme=THEME
-```
-
-### Streak Card
-
-```
-GET /api/streak?username=USERNAME&theme=THEME
-```
-
-## Themes
-
-Available themes include: `default`, `dark`, `radical`, `merko`, `gruvbox`, `tokyonight`, `onedark`, `cobalt`, `synthwave`, `dracula`, `prussian`, `monokai`, `vue`, `vue-dark`, `shades-of-purple`, `nightowl`, `nord`, `github_dark`, and many more.
-
-Custom colors can be applied using query parameters:
-
-```
-?title_color=ff0000&icon_color=00ff00&text_color=0000ff&bg_color=ffffff
-```
-
-## Deployment
-
-### Cloudflare Pages
-
-The API is deployed on Cloudflare Pages with Workers for dynamic SVG generation.
-
-### GitHub Pages
-
-Pre-generated SVGs are available on GitHub Pages, updated every 6 hours.
+Available themes: `default`, `dark`, `radical`, `tokyonight`, `dracula`, `nord`, `merko`, `synthwave`, `gruvbox`, `github_dark`
 
 ## Development
 
 ```bash
-git clone https://github.com/Karan-Safaie-Qadi/GhReadmeStats.git
+git clone https://github.com/YOUR_USERNAME/GhReadmeStats.git
 cd GhReadmeStats
 npm install
-npm test
+GITHUB_TOKEN=your_pat node scripts/generate-svgs.mjs ./svgs
 ```
-
-Set `GITHUB_TOKEN` environment variable for local testing.
-
-## Architecture
-
-- **src/** — Source code for API and card rendering
-  - **cards/** — SVG card renderers
-  - **api.js** — GitHub GraphQL API fetchers
-  - **index.js** — Cloudflare Workers entry point
-  - **themes.js** — Color theme definitions
-  - **utils.js** — Utility functions
-- **test/** — Test suites
-- **scripts/** — Build and generation scripts
-- **functions/** — Cloudflare Functions routes
 
 ## License
 
 MIT
-# update 0
-# update 1
-# update 2
-# update 3
-# update 4
-# update 5
-# update 6
-# workflow 0
-# workflow 1
-# workflow 2
