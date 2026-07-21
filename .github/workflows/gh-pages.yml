@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 env:
-  USERNAME: Karan-Safaie-Qadi
-  GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+  USERNAME: ${{ github.repository_owner }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   generate:

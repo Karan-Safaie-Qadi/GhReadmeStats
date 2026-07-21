@@ -7,11 +7,15 @@ import { getTheme } from '../src/themes.js';
 import fs from 'fs';
 import path from 'path';
 
-const username = process.env.USERNAME || 'Karan-Safaie-Qadi';
+const username = process.env.USERNAME || process.env.GITHUB_REPOSITORY_OWNER;
 const token = process.env.GITHUB_TOKEN;
 const repoOwner = process.env.GITHUB_REPOSITORY_OWNER || username;
 const repoName = process.env.GITHUB_REPOSITORY_NAME || 'GhReadmeStats';
 
+if (!username) {
+  console.error('USERNAME environment variable is required');
+  process.exit(1);
+}
 if (!token) {
   console.error('GITHUB_TOKEN environment variable is required');
   process.exit(1);
@@ -38,7 +42,7 @@ async function generate() {
 
   const stats = await fetchUserStats(username, token, {
     include_all_commits: true,
-    count_private: true,
+    count_private: process.env.COUNT_PRIVATE === 'true',
   });
   const langData = await fetchTopLanguages(username, token);
   const streakData = await fetchStreakStats(username, token);
