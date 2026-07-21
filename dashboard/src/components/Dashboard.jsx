@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 const THEMES = ['default', 'dark', 'radical', 'tokyonight', 'dracula', 'nord', 'merko', 'synthwave', 'gruvbox', 'github_dark'];
 
@@ -8,119 +8,76 @@ function Dashboard({ user, stats, langData, streakData, loading, error, onRefres
   const [showIcons, setShowIcons] = useState(true);
   const [hideBorder, setHideBorder] = useState(false);
   const [cardType, setCardType] = useState('stats');
-  const [svgUrl, setSvgUrl] = useState('');
-  const urlRef = useRef(null);
+  const [svgData, setSvgData] = useState('');
+  const imgRef = useRef(null);
 
-  const generate = useCallback(async () => {
+  const gen = useCallback(async () => {
     if (!stats) return;
     try {
-      const [{ getTheme, applyCustomColors }, { renderStatsCard }, { renderTopLangsCard }, { renderStreakCard }] =
-        await Promise.all([
-          import('@core/themes.js'),
-          import('@core/cards/stats.js'),
-          import('@core/cards/top-langs.js'),
-          import('@core/cards/streak.js'),
-        ]);
-
-      const themeObj = applyCustomColors(getTheme(theme), {});
-
+      const [th, sc, tc, st] = await Promise.all([
+        import('@core/themes.js'),
+        import('@core/cards/stats.js'),
+        import('@core/cards/top-langs.js'),
+        import('@core/cards/streak.js'),
+      ]);
+      const themeObj = th.applyCustomColors(th.getTheme(theme), {});
       let svg;
       switch (cardType) {
-        case 'stats':
-          svg = renderStatsCard(stats, themeObj, {
-            hide_rank: hideRank, show_icons: showIcons,
-            hide_border: hideBorder, include_all_commits: true,
-          });
-          break;
-        case 'top-langs':
-          svg = renderTopLangsCard(langData || { langs: [] }, themeObj, {});
-          break;
-        case 'streak':
-          svg = renderStreakCard(streakData || {}, themeObj, {});
-          break;
+        case 'stats': svg = sc.renderStatsCard(stats, themeObj, { hide_rank: hideRank, show_icons: showIcons, hide_border: hideBorder, include_all_commits: true }); break;
+        case 'top-langs': svg = tc.renderTopLangsCard(langData || { langs: [] }, themeObj, {}); break;
+        case 'streak': svg = st.renderStreakCard(streakData || {}, themeObj, {}); break;
       }
-
-      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
-      const blob = new Blob([svg], { type: 'image/svg+xml' });
-      const url = URL.createObjectURL(blob);
-      urlRef.current = url;
-      setSvgUrl(url);
-    } catch (e) {
-      console.error('SVG render error:', e);
-    }
+      setSvgData(`data:image/svg+xml,${encodeURIComponent(svg)}`);
+    } catch (e) { console.error(e); }
   }, [stats, langData, streakData, cardType, theme, hideRank, showIcons, hideBorder]);
 
-  useEffect(() => { generate(); }, [generate]);
+  useEffect(() => { gen(); }, [gen]);
 
-  useEffect(() => {
-    return () => { if (urlRef.current) URL.revokeObjectURL(urlRef.current); };
-  }, []);
+  const md = stats ? `![${user.login}'s GitHub Stats](https://gh-readme-stats.pages.dev/api/${cardType}?username=${user.login}&theme=${theme}${showIcons ? '&show_icons=true' : ''}${hideRank ? '&hide_rank=true' : ''}${hideBorder ? '&hide_border=true' : ''})` : '';
 
-  const markdown = stats ? `![${user.login}'s GitHub Stats](https://gh-readme-stats.pages.dev/api/${cardType}?username=${user.login}&theme=${theme}${showIcons ? '&show_icons=true' : ''}${hideRank ? '&hide_rank=true' : ''}${hideBorder ? '&hide_border=true' : ''})` : '';
-
-  if (loading) {
-    return <div className="loading"><div className="spinner"></div><p>Fetching your GitHub data…</p></div>;
-  }
-
-  if (error) {
-    return (
-      <div className="error-box">
-        <h3>Something went wrong</h3>
-        <p>{error}</p>
-        <button className="btn btn-primary" onClick={onRefresh}>Try again</button>
-      </div>
-    );
-  }
-
+  if (loading) return <div className="loading"><div className="spinner" /><p>Loading your GitHub data…</p></div>;
+  if (error) return <div className="error-box"><h3>Error</h3><p>{error}</p><button className="btn btn-primary" onClick={onRefresh}>Retry</button></div>;
   if (!stats) return null;
 
   return (
-    <div className="dashboard">
-      <div className="section">
-        <h2>Statistics</h2>
-        <div className="stats-grid">
-          <div className="stat-item"><span className="val">{stats.totalCommits?.toLocaleString()}</span><span className="lbl">Commits</span></div>
-          <div className="stat-item"><span className="val">{stats.totalPRs}</span><span className="lbl">Pull Requests</span></div>
-          <div className="stat-item"><span className="val">{stats.totalIssues}</span><span className="lbl">Issues</span></div>
-          <div className="stat-item"><span className="val">{stats.totalStars}</span><span className="lbl">Stars</span></div>
-          <div className="stat-item"><span className="val">{stats.followers}</span><span className="lbl">Followers</span></div>
-          <div className="stat-item"><span className="val">{stats.contributedTo}</span><span className="lbl">Repositories</span></div>
+    <div className="dash">
+      <div className="card">
+        <div className="card-title">Statistics</div>
+        <div className="grid">
+          {[
+            ['Commits', stats.totalCommits?.toLocaleString()],
+            ['Pull Requests', stats.totalPRs],
+            ['Issues', stats.totalIssues],
+            ['Stars', stats.totalStars],
+            ['Followers', stats.followers],
+            ['Repositories', stats.contributedTo],
+          ].map(([l, v]) => (
+            <div key={l} className="stat"><span className="num">{v}</span><span className="lbl">{l}</span></div>
+          ))}
         </div>
       </div>
 
-      <div className="section">
-        <h2>Card Preview</h2>
-        <div className="customizer">
-          <div className="controls">
-            <div>
-              <label>Type</label>
-              <select value={cardType} onChange={e => setCardType(e.target.value)}>
-                <option value="stats">Stats</option>
-                <option value="top-langs">Top Languages</option>
-                <option value="streak">Streak</option>
-              </select>
-            </div>
-            <div>
-              <label>Theme</label>
-              <select value={theme} onChange={e => setTheme(e.target.value)}>
-                {THEMES.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
-            </div>
+      <div className="card">
+        <div className="card-title">Card Preview</div>
+        <div className="row">
+          <div className="sidebar">
+            <div><label>Type</label><select value={cardType} onChange={e => setCardType(e.target.value)}><option value="stats">Stats</option><option value="top-langs">Top Languages</option><option value="streak">Streak</option></select></div>
+            <div><label>Theme</label><select value={theme} onChange={e => setTheme(e.target.value)}>{THEMES.map(t => <option key={t}>{t}</option>)}</select></div>
             {cardType === 'stats' && <>
-              <label className="cb-label"><input type="checkbox" checked={showIcons} onChange={e => setShowIcons(e.target.checked)} /> Show Icons</label>
-              <label className="cb-label"><input type="checkbox" checked={hideRank} onChange={e => setHideRank(e.target.checked)} /> Hide Rank</label>
-              <label className="cb-label"><input type="checkbox" checked={hideBorder} onChange={e => setHideBorder(e.target.checked)} /> Hide Border</label>
+              <label className="cb"><input type="checkbox" checked={showIcons} onChange={e => setShowIcons(e.target.checked)} />Icons</label>
+              <label className="cb"><input type="checkbox" checked={hideRank} onChange={e => setHideRank(e.target.checked)} />Hide rank</label>
+              <label className="cb"><input type="checkbox" checked={hideBorder} onChange={e => setHideBorder(e.target.checked)} />Hide border</label>
             </>}
           </div>
-          <div className="preview-area">
-            <div className="card-box">
-              {svgUrl ? <object data={svgUrl} type="image/svg+xml" aria-label="Card preview" style={{ maxWidth: '100%' }} /> : <div className="spinner" />}
+          <div className="preview">
+            <div className="preview-box">
+              {svgData ? <img ref={imgRef} src={svgData} alt="Card preview" /> : <div className="spinner" />}
             </div>
-            <div className="markdown-box">
-              <label>Markdown code — paste this in your profile README</label>
-              <div className="markdown-row">
-                <textarea readOnly value={markdown} onClick={e => e.target.select()} />
-                <button className="btn btn-sm btn-primary" onClick={() => navigator.clipboard?.writeText(markdown)}>Copy</button>
+            <div className="code-box">
+              <label>Markdown code — paste in your profile README</label>
+              <div className="code-row">
+                <textarea readOnly value={md} onClick={e => e.target.select()} />
+                <button className="btn btn-sm btn-primary" onClick={() => navigator.clipboard?.writeText(md)}>Copy</button>
               </div>
             </div>
           </div>

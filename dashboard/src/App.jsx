@@ -13,15 +13,12 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    if (token) fetchAll();
-  }, []);
+  useEffect(() => { if (token) fetchAll(); }, []);
 
   async function fetchAll() {
     const t = token || localStorage.getItem('gh_token');
     if (!t) return;
-    setLoading(true);
-    setError('');
+    setLoading(true); setError('');
     try {
       const u = await validateToken(t);
       setUser(u);
@@ -30,64 +27,37 @@ function App() {
         fetchTopLanguages(u.login, t),
         fetchStreakStats(u.login, t),
       ]);
-      setStats(s);
-      setLangData(l);
-      setStreakData(st);
+      setStats(s); setLangData(l); setStreakData(st);
       localStorage.setItem('gh_token', t);
     } catch (e) {
       setError(e.message);
       if (e.message.includes('401') || e.message.toLowerCase().includes('bad credential')) {
-        localStorage.removeItem('gh_token');
-        setToken('');
+        localStorage.removeItem('gh_token'); setToken('');
       }
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   }
 
-  function handleLogin(t) {
-    setToken(t);
-    localStorage.setItem('gh_token', t);
-    fetchAll();
-  }
-
-  function handleLogout() {
-    setToken('');
-    setUser(null);
-    setStats(null);
-    setLangData(null);
-    setStreakData(null);
-    localStorage.removeItem('gh_token');
-  }
+  function handleLogin(t) { setToken(t); localStorage.setItem('gh_token', t); fetchAll(); }
+  function handleLogout() { setToken(''); setUser(null); setStats(null); setLangData(null); setStreakData(null); localStorage.removeItem('gh_token'); }
 
   return (
     <div className="app">
       <header className="header">
-        <div className="header-content">
+        <div className="header-inner">
           <h1>GhReadmeStats</h1>
           {user && (
-            <div className="user-info">
-              <img src={user.avatar} alt="" className="user-avatar" />
+            <div className="user-row">
+              <img src={user.avatar} alt="" />
               <span>{user.login}</span>
-              <button className="btn btn-sm btn-outline" onClick={fetchAll} disabled={loading}>Refresh</button>
-              <button className="btn btn-sm btn-outline" onClick={handleLogout}>Logout</button>
+              <button className="btn btn-sm btn-ghost" onClick={fetchAll} disabled={loading}>Refresh</button>
+              <button className="btn btn-sm btn-ghost" onClick={handleLogout}>Logout</button>
             </div>
           )}
         </div>
       </header>
       <main className="main">
-        {!token ? (
-          <Login onLogin={handleLogin} />
-        ) : (
-          <Dashboard
-            user={user}
-            stats={stats}
-            langData={langData}
-            streakData={streakData}
-            loading={loading}
-            error={error}
-            onRefresh={fetchAll}
-          />
+        {!token ? <Login onLogin={handleLogin} /> : (
+          <Dashboard user={user} stats={stats} langData={langData} streakData={streakData} loading={loading} error={error} onRefresh={fetchAll} />
         )}
       </main>
     </div>
