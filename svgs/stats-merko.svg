@@ -7,8 +7,8 @@
   role="img"
   aria-labelledby="descId"
 >
-  <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: B+ (40th percentile)</title>
-  <desc id="descId">Total Stars Earned: 30, Total Commits: 4348, Total PRs: 190, Total Issues: 0, Contributed to (last year): 4</desc>
+  <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: A- (34th percentile)</title>
+  <desc id="descId">Total Stars Earned: 56, Total Commits: 4351, Total PRs: 190, Total Issues: 0, Contributed to (last year): 4</desc>
   <style>
     
     .header {
@@ -66,7 +66,7 @@
     }
     @keyframes rankAnimation {
       from { stroke-dashoffset: 251.32741228718345; }
-      to { stroke-dashoffset: 100.57266927776034; }
+      to { stroke-dashoffset: 85.14274130904049; }
     }
   </style>
 
@@ -99,7 +99,7 @@
       <circle class="rank-circle-rim" cx="-10" cy="8" r="40" />
       <circle class="rank-circle" cx="-10" cy="8" r="40" />
       <g class="rank-text">
-        <text x="-5" y="3" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="level-rank-icon">B+</text>
+        <text x="-5" y="3" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="level-rank-icon">A-</text>
       </g>
     </g>
     <svg x="0" y="0">
@@ -107,14 +107,14 @@
     <g class="stagger" style="animation-delay: 450ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="stars">30</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="stars">56</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Contributions:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">4.3K</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">4.4K</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
