@@ -7,8 +7,8 @@
   role="img"
   aria-labelledby="descId"
 >
-  <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: A (20th percentile)</title>
-  <desc id="descId">Total Stars Earned: 108, Total Commits: 4490, Total PRs: 234, Total Issues: 45, Contributed to (last year): 4</desc>
+  <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: A (14th percentile)</title>
+  <desc id="descId">Total Stars Earned: 147, Total Commits: 4810, Total PRs: 333, Total Issues: 145, Contributed to (last year): 4</desc>
   <style>
     
     .header {
@@ -66,7 +66,7 @@
     }
     @keyframes rankAnimation {
       from { stroke-dashoffset: 251.32741228718345; }
-      to { stroke-dashoffset: 50.1241475375622; }
+      to { stroke-dashoffset: 34.700458804284615; }
     }
   </style>
 
@@ -107,28 +107,28 @@
     <g class="stagger" style="animation-delay: 450ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="stars">108</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="stars">147</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Contributions:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">4.5K</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="commits">4.8K</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total PRs:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">234</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="prs">333</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
       
       <text class="stat bold"  y="12.5">Total Issues:</text>
-      <text class="stat bold" x="199.01" y="12.5" data-testid="issues">45</text>
+      <text class="stat bold" x="199.01" y="12.5" data-testid="issues">145</text>
     </g>
   </g>
 <g transform="translate(0, 100)">
