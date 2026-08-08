@@ -8,7 +8,7 @@
   aria-labelledby="descId"
 >
   <title id="titleId">Karan Safaie Qadi's GitHub Stats, Rank: A+ (10th percentile)</title>
-  <desc id="descId">Total Stars Earned: 225, Total Commits: 5672, Total PRs: 489, Total Issues: 302, Contributed to (last year): 6</desc>
+  <desc id="descId">Total Stars Earned: 225, Total Commits: 5673, Total PRs: 489, Total Issues: 302, Contributed to (last year): 6</desc>
   <style>
     
     .header {
@@ -66,7 +66,7 @@
     }
     @keyframes rankAnimation {
       from { stroke-dashoffset: 251.32741228718345; }
-      to { stroke-dashoffset: 24.736175212820136; }
+      to { stroke-dashoffset: 24.735554186524553; }
     }
   </style>
 
